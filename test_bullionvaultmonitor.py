@@ -18,6 +18,8 @@ class Test_BullionVaultMonitor(test_monitor.Test_Monitor):
             for j in self.validMarkets:
                 self.validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,i,j))
 
+        self.monitor = self.validMonitors.pop()
+
     def test_invalidMonitors(self):
 
         with self.assertRaises(monitor.CreateError) as cm:
