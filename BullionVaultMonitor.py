@@ -1,48 +1,49 @@
 #!/usr/bin/python
 
-class BullionVaultMonitor():
+class BullionVaultMonitor:
+    '''Class to monitor market prices at BullionVault'''
 
     def __init__(self, currency, market):
 
-        self.currency = currency
-        self.market = market
+        self._currency = currency
+        self._market = market
 
-        self.validCurrencies = frozenset( ['EUR','GBP','USD'] )
-        self.validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
+        self._validCurrencies = frozenset( ['EUR','GBP','USD'] )
+        self._validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
 
-        if self.currency not in self.validCurrencies:
+        if self._currency not in self._validCurrencies:
             raise InitError('Invalid currency')
 
-        if self.market not in self.validMarkets:
+        if self._market not in self._validMarkets:
             raise InitError('Invalid market')
 
-        self.offer = 32490
-        self.bid = 32410
-        self.spread = self.offer - self.bid
+        self._offer = 32490
+        self._bid = 32410
+        self._spread = self._offer - self._bid
 
     def getCurrency(self):
-        return self.currency
+        return self._currency
 
     def getMarket(self):
-        return self.market
-
-    def getBid(self):
-        return self.bid
+        return self._market
 
     def getOffer(self):
-        return self.offer
+        return self._offer
+
+    def getBid(self):
+        return self._bid
     
     def getSpread(self):
-        return self.spread
+        return self._spread
 
 
 class Error(Exception):
-    ''' Base class for exceptions in this module '''
+    '''Base class for exceptions in the BullionVaultMonitor module'''
     pass
 
 
 class InitError(Error):
-    ''' Exception thrown by the constructor '''
+    '''Exception thrown by the BullionVaultMonitor constructor'''
     
     def __init__(self, message):
         self.message = message

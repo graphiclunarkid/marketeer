@@ -15,19 +15,6 @@ class Test_BullionVaultMonitor(unittest.TestCase):
             for j in self.validMarkets:
                 self.validMonitors.add(BullionVaultMonitor.BullionVaultMonitor(i,j))
 
-    def test_validMonitors(self):
-
-        self.monitors = self.validMonitors.copy()
-
-        while len(self.monitors) > 0:
-            self.monitor = self.monitors.pop()
-            self.assertIn(self.monitor.currency, self.validCurrencies, 'Invalid currency')
-            self.assertIn(self.monitor.market, self.validMarkets, 'Invalid market')
-            self.assertGreater(self.monitor.offer, 0, 'Offer price is negative')
-            self.assertGreater(self.monitor.bid, 0, 'Bid price is negative')
-            self.assertGreaterEqual(self.monitor.offer, self.monitor.bid, 'Offer price is >= bid price')
-            self.assertGreaterEqual(self.monitor.spread, 0, 'Spread is negative')
-
     def test_getMonitorAttributes(self):
 
         self.monitors = self.validMonitors.copy()
