@@ -6,6 +6,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def setUp(self):
 
+        self.updatePeriod = 60
         self.validCurrencies = list( ['EUR','GBP','USD'] )
         self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
         self.invalidCurrency = '123'
@@ -14,7 +15,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         for i in self.validCurrencies:
             for j in self.validMarkets:
-                self.validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(i,j))
+                self.validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,i,j))
 
     def test_getMonitorAttributes(self):
 
@@ -29,23 +30,25 @@ class Test_BullionVaultMonitor(unittest.TestCase):
             self.bid = self.monitor.getBid()
             self.offer = self.monitor.getOffer()
             self.spread = self.monitor.getSpread()
+            self.url = self.monitor.getUrl()
+            self.updatePeriod = self.monitor.getUpdatePeriod()
 
-            self.assertIn(self.market, self.validMarkets, 'Invalid market')
-            self.assertIn(self.currency, self.validCurrencies, 'Invalid currency')
-            self.assertGreater(self.offer, 0, 'Offer price is negative')
-            self.assertGreater(self.bid, 0, 'Bid price is negative')
+            self.assertGreater(self.offer, 0, 'Offer price is zero or negative')
+            self.assertGreater(self.bid, 0, 'Bid price is zero or negative')
             self.assertGreaterEqual(self.offer, self.bid, 'Offer price is >= bid price')
             self.assertGreaterEqual(self.spread, 0, 'Spread is negative')
-
+            self.assertIsNotNone(self.url, 'URL not set')
+            self.assertGreater(self.updatePeriod, 0, 'Update period is zero or negative')
+        
     def test_invalidMonitors(self):
 
         with self.assertRaises(monitor.InitError) as cm:
-            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.invalidCurrency, self.validMarkets[0])
+            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod, self.invalidCurrency, self.validMarkets[0])
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid currency')
 
         with self.assertRaises(monitor.InitError) as cm:
-            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.validCurrencies[0], self.invalidMarket)
+            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod, self.validCurrencies[0], self.invalidMarket)
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid market')
 

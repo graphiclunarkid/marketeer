@@ -5,10 +5,10 @@ import monitor
 class BullionVaultMonitor(monitor.Monitor):
     '''Class to monitor market prices at BullionVault'''
 
-    def __init__(self, currency, market):
+    def __init__(self, updatePeriod, currency, market):
 
-        self._currency = currency
-        self._market = market
+        self._url = 'http://live.bullionvault.com/view_market_xml.do'
+        monitor.Monitor.__init__(self, self._url, updatePeriod, currency, market)
 
         self._validCurrencies = frozenset( ['EUR','GBP','USD'] )
         self._validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
@@ -18,23 +18,3 @@ class BullionVaultMonitor(monitor.Monitor):
 
         if self._market not in self._validMarkets:
             raise monitor.InitError('Invalid market')
-
-        self._offer = 32490
-        self._bid = 32410
-        self._spread = self._offer - self._bid
-
-    def getCurrency(self):
-        return self._currency
-
-    def getMarket(self):
-        return self._market
-
-    def getOffer(self):
-        return self._offer
-
-    def getBid(self):
-        return self._bid
-    
-    def getSpread(self):
-        return self._spread
-

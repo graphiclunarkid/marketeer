@@ -3,12 +3,12 @@
 class Monitor:
     '''Generic market-price monitor class'''
 
-    def __init__(self, url, updatePeriod):
+    def __init__(self, url, updatePeriod, currency, market):
         self._url = url
         self._updatePeriod = updatePeriod
-
-        self._currency = 'EUR'
-        self._market = 'AUXLN'
+        self._currency = currency
+        self._market = market
+        
         self._offer = 32490
         self._bid = 32410
 
