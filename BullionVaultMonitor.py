@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
-class BullionVaultMonitor:
+import Monitor
+
+class BullionVaultMonitor(Monitor.Monitor):
     '''Class to monitor market prices at BullionVault'''
 
     def __init__(self, currency, market):
