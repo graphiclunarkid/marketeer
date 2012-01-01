@@ -1,8 +1,9 @@
 import unittest
 import monitor
+import Test_monitor
 import bullionvaultmonitor
 
-class Test_BullionVaultMonitor(unittest.TestCase):
+class Test_BullionVaultMonitor(Test_monitor.Test_Monitor):
 
     def setUp(self):
 
@@ -17,6 +18,12 @@ class Test_BullionVaultMonitor(unittest.TestCase):
             for j in self.validMarkets:
                 self.validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,i,j))
 
+    def tearDown(self):
+
+        self.validMonitors.clear()
+        self.validMonitors = None
+        self.monitors = None
+
     def test_getMonitorAttributes(self):
 
         self.monitors = self.validMonitors.copy()
@@ -24,21 +31,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         while len(self.monitors) > 0:
 
             self.monitor = self.monitors.pop()
-
-            self.currency = self.monitor.getCurrency()
-            self.market = self.monitor.getMarket()
-            self.bid = self.monitor.getBid()
-            self.offer = self.monitor.getOffer()
-            self.spread = self.monitor.getSpread()
-            self.url = self.monitor.getUrl()
-            self.updatePeriod = self.monitor.getUpdatePeriod()
-
-            self.assertGreater(self.offer, 0, 'Offer price is zero or negative')
-            self.assertGreater(self.bid, 0, 'Bid price is zero or negative')
-            self.assertGreaterEqual(self.offer, self.bid, 'Offer price is >= bid price')
-            self.assertGreaterEqual(self.spread, 0, 'Spread is negative')
-            self.assertIsNotNone(self.url, 'URL not set')
-            self.assertGreater(self.updatePeriod, 0, 'Update period is zero or negative')
+            Test_monitor.Test_Monitor.test_getMonitorAttributes(self)
         
     def test_invalidMonitors(self):
 
@@ -51,12 +44,6 @@ class Test_BullionVaultMonitor(unittest.TestCase):
             self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod, self.validCurrencies[0], self.invalidMarket)
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid market')
-
-    def tearDown(self):
-
-        self.validMonitors.clear()
-        self.validMonitors = None
-        self.monitors = None
 
         
 if __name__ == '__main__':

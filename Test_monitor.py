@@ -4,28 +4,26 @@ import monitor
 class Test_Monitor(unittest.TestCase):
 
     def setUp(self):
-        self.monitor = monitor.Monitor('http://live.bullionvault.com/view_market_xml.do',60,'GBP','AUXLN')
-    
-    def test_getMonitorAttributes(self):
-
-        self.currency = self.monitor.getCurrency()
-        self.market = self.monitor.getMarket()
-        self.bid = self.monitor.getBid()
-        self.offer = self.monitor.getOffer()
-        self.spread = self.monitor.getSpread()
-        self.url = self.monitor.getUrl()
-        self.updatePeriod = self.monitor.getUpdatePeriod()
-
-        self.assertGreater(self.offer, 0, 'Offer price is zero or negative')
-        self.assertGreater(self.bid, 0, 'Bid price is zero or negative')
-        self.assertGreaterEqual(self.offer, self.bid, 'Offer price is >= bid price')
-        self.assertGreaterEqual(self.spread, 0, 'Spread is negative')
-        self.assertIsNotNone(self.url, 'URL not set')
-        self.assertGreater(self.updatePeriod, 0, 'Update period is zero or negative')
+        self.url = 'http://live.bullionvault.com/view_market_xml.do'
+        self.updatePeriod = 60
+        self.currency = 'GBP'
+        self.market = 'AUXLN'
+        self.monitor = monitor.Monitor(self.url,self.updatePeriod,self.currency,self.market)
 
     def tearDown(self):
-        pass
+        self.monitor = None
 
+    def suite():
+        return unittest.TestLoader().loadTestsFromTestCase(Test_Monitor)
+    
+    def test_getMonitorAttributes(self):
+        self.assertIsNotNone(self.monitor.getCurrency(), 'Currency is not set')
+        self.assertIsNotNone(self.monitor.getMarket(), 'Market is not set')
+        self.assertGreater(self.monitor.getBid(), 0, 'Bid price is zero or negative')
+        self.assertGreater(self.monitor.getOffer(), 0, 'Offer price is zero or negative')
+        self.assertGreaterEqual(self.monitor.getSpread(), 0, 'Spread is negative')
+        self.assertIsNotNone(self.monitor.getUrl(), 'URL not set')
+        self.assertGreater(self.monitor.getUpdatePeriod(), 0, 'Update period is zero or negative')
 
 if __name__ == '__main__':
     unittest.main()
