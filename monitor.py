@@ -18,6 +18,9 @@ class Monitor:
     def getUpdatePeriod(self):
         return self._updatePeriod
 
+    def setUpdatePeriod(self, updatePeriod):
+        self._updatePeriod = updatePeriod
+
     def getCurrency(self):
         return self._currency
 
@@ -39,7 +42,7 @@ class Error(Exception):
     pass
 
 
-class InitError(Error):
+class CreateError(Error):
     '''Exception thrown by the Monitor() constructor'''
     
     def __init__(self, message):
@@ -48,4 +51,11 @@ class InitError(Error):
     def __str__(self):
         return repr(self.message)
 
+class UpdateError(Error):
+    '''Exception thrown by the Monitor() constructor'''
+    
+    def __init__(self, message):
+        self.message = message
 
+    def __str__(self):
+        return repr(self.message)

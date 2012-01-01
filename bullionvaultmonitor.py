@@ -14,7 +14,7 @@ class BullionVaultMonitor(monitor.Monitor):
         self._validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
 
         if self._currency not in self._validCurrencies:
-            raise monitor.InitError('Invalid currency')
+            raise monitor.CreateError('Invalid currency')
 
         if self._market not in self._validMarkets:
-            raise monitor.InitError('Invalid market')
+            raise monitor.CreateError('Invalid market')

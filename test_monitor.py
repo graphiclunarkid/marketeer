@@ -37,11 +37,11 @@ class Test_Monitor(unittest.TestCase):
             self.assertIsNotNone(self.monitor.getUrl(), 'URL not set')
             self.assertGreater(self.monitor.getUpdatePeriod(), 0, 'Update period is zero or negative')
 
-#    def test_setMonitorAttributes(self):
-#
-#        self.monitor = self.validmonitors.pop()
-#        self.monitor.setUpdatePeriod(90)
-#        self.assertEqual(self.monitor.getUpdatePeriod, 90, 'Update period was not set correctly')
+    def test_setMonitorAttributes(self):
+
+        self.monitor = self.validMonitors.pop()
+        self.monitor.setUpdatePeriod(90)
+        self.assertEqual(self.monitor.getUpdatePeriod(), 90, 'Update period was not set correctly')
 
 suite = unittest.TestLoader().loadTestsFromTestCase(Test_Monitor)
 unittest.TextTestRunner(verbosity=2).run(suite)
