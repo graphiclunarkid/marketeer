@@ -1,9 +1,9 @@
 import unittest
 import monitor
-import Test_monitor
+import test_monitor
 import bullionvaultmonitor
 
-class Test_BullionVaultMonitor(Test_monitor.Test_Monitor):
+class Test_BullionVaultMonitor(test_monitor.Test_Monitor):
 
     def setUp(self):
 
@@ -31,7 +31,7 @@ class Test_BullionVaultMonitor(Test_monitor.Test_Monitor):
         while len(self.monitors) > 0:
 
             self.monitor = self.monitors.pop()
-            Test_monitor.Test_Monitor.test_getMonitorAttributes(self)
+            test_monitor.Test_Monitor.test_getMonitorAttributes(self)
         
     def test_invalidMonitors(self):
 
