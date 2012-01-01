@@ -1,10 +1,10 @@
 import unittest
-import Monitor
+import monitor
 
 class Test_Monitor(unittest.TestCase):
 
     def setUp(self):
-        self.monitor = Monitor.Monitor('http://live.bullionvault.com/view_market_xml.do', 60)
+        self.monitor = monitor.Monitor('http://live.bullionvault.com/view_market_xml.do', 60)
     
     def test_getMonitorAttributes(self):
 

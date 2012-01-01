@@ -1,5 +1,6 @@
 import unittest
-import BullionVaultMonitor
+import monitor
+import bullionvaultmonitor
 
 class Test_BullionVaultMonitor(unittest.TestCase):
 
@@ -13,7 +14,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         for i in self.validCurrencies:
             for j in self.validMarkets:
-                self.validMonitors.add(BullionVaultMonitor.BullionVaultMonitor(i,j))
+                self.validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(i,j))
 
     def test_getMonitorAttributes(self):
 
@@ -38,13 +39,13 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def test_invalidMonitors(self):
 
-        with self.assertRaises(BullionVaultMonitor.InitError) as cm:
-            self.monitor = BullionVaultMonitor.BullionVaultMonitor(self.invalidCurrency, self.validMarkets[0])
+        with self.assertRaises(monitor.InitError) as cm:
+            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.invalidCurrency, self.validMarkets[0])
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid currency')
 
-        with self.assertRaises(BullionVaultMonitor.InitError) as cm:
-            self.monitor = BullionVaultMonitor.BullionVaultMonitor(self.validCurrencies[0], self.invalidMarket)
+        with self.assertRaises(monitor.InitError) as cm:
+            self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.validCurrencies[0], self.invalidMarket)
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid market')
 
