@@ -30,6 +30,6 @@ class Test_BullionVaultMonitor(test_monitor.Test_Monitor):
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid market')
 
-        
-if __name__ == '__main__':
-    unittest.main()
+
+suite = unittest.TestLoader().loadTestsFromTestCase(Test_BullionVaultMonitor)
+unittest.TextTestRunner(verbosity=2).run(suite)

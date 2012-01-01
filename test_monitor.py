@@ -21,7 +21,7 @@ class Test_Monitor(unittest.TestCase):
         self.validMonitors = None
         self.monitors = None
         self.monitor = None
-
+        
     def test_getMonitorAttributes(self):
 
         self.monitors = self.validMonitors.copy()
@@ -38,5 +38,5 @@ class Test_Monitor(unittest.TestCase):
             self.assertIsNotNone(self.monitor.getUrl(), 'URL not set')
             self.assertGreater(self.monitor.getUpdatePeriod(), 0, 'Update period is zero or negative')
 
-if __name__ == '__main__':
-    unittest.main()
+suite = unittest.TestLoader().loadTestsFromTestCase(Test_Monitor)
+unittest.TextTestRunner(verbosity=2).run(suite)
