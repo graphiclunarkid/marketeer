@@ -4,7 +4,7 @@ import monitor
 class Test_Monitor(unittest.TestCase):
 
     def setUp(self):
-        self.url = 'http://live.bullionvault.com/view_market_xml.do'
+        self.url = 'bvdata.xml'
         self.updatePeriod = 60
         self.validCurrencies = 'GBP'
         self.validMarkets = 'AUXLN'
