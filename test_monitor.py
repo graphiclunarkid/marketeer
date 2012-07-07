@@ -41,15 +41,15 @@ class Test_Monitor(unittest.TestCase):
 
     def test_setInvalidMonitorAttributes(self):
 
-        before = self.monitor.updatePeriod
+#        before = self.monitor.updatePeriod
 
         with self.assertRaises(monitor.UpdateError) as cm:
-            self.monitor.setUpdatePeriod(-90)
+            self.monitor.updatePeriod = -90
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid update period')
 
-        after = self.monitor.updatePeriod
-        self.assertEqual(before, after, 'Update period shouldn\'t have changed but it did')
+#        after = self.monitor.updatePeriod
+#        self.assertEqual(before, after, 'Update period shouldn\'t have changed but it did')
 
 suite = unittest.TestLoader().loadTestsFromTestCase(Test_Monitor)
 unittest.TextTestRunner(verbosity=2).run(suite)
