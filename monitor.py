@@ -5,21 +5,28 @@ class Monitor:
 
     def __init__(self, url, updatePeriod, currency, market):
 
-        self._url = url
+        self.url = url
+	self.updatePeriod = updatePeriod
         self.setUpdatePeriod(updatePeriod)
-        self._currency = currency
-        self._market = market
-        
-        self._offer = 32490
-        self._bid = 32410
+        self.currency = currency
+        self.market = market
+ 
+        self.offer = 32490
+        self.bid = 32410
 
-    def getUrl(self):
+	self.spread = self.offer - self.bid
 
-        return self._url
-    
-    def getUpdatePeriod(self):
+    def set_offer(self, value):
+	if (value < self._bid):
+	    raise UpdateError('Offer price cannot be less than bid price')
+	else:
+	    self._offer = value
+	
+    def get_offer(self):
+	return _offer
 
-        return self._updatePeriod
+    offer = property(set_offer, get_offer)
+
 
     def setUpdatePeriod(self, updatePeriod):
 
@@ -28,29 +35,8 @@ class Monitor:
         if (u_p < 0):
             raise UpdateError('Invalid update period')
         else:
-            self._updatePeriod = u_p
+            self.updatePeriod = u_p
 
-    def getCurrency(self):
-
-        return self._currency
-
-    def getMarket(self):
-
-        return self._market
-
-    def getOffer(self):
-
-        return self._offer
-
-    def getBid(self):
-
-        return self._bid
-    
-    def getSpread(self):
-
-        return self._offer - self._bid
-
-    
 class Error(Exception):
     '''Base class for exceptions in the Monitor module'''
     pass
