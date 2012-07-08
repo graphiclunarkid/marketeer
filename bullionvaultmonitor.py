@@ -11,16 +11,6 @@ class BullionVaultMonitor(monitor.Monitor):
 
         self.url = 'bvdata.xml'
         monitor.Monitor.__init__(self, self.url, updatePeriod, currency, market)
-
-        self.validCurrencies = frozenset( ['EUR','GBP','USD'] )
-        self.validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
-
-        if (self.currency not in self.validCurrencies):
-            raise monitor.MonitorError('Invalid currency')
-
-        if (self.market not in self.validMarkets):
-            raise monitor.MonitorError('Invalid market')
-
         self.data = self.update(self.url)
 
     def update(self, source):
@@ -28,3 +18,6 @@ class BullionVaultMonitor(monitor.Monitor):
         xmldoc = minidom.parse(sock).documentElement
         sock.close()
         return xmldoc
+
+
+
