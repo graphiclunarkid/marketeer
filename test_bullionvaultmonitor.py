@@ -24,8 +24,8 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         while (len(validMonitors) > 0):
 
-            monitor.offer = 32500
-            monitor.bid = 32450
+#            monitor.offer = 32500
+#            monitor.bid = 32450
             self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
 
             monitor = validMonitors.pop()

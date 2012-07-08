@@ -10,7 +10,9 @@ class BullionVaultMonitor(monitor.Monitor):
     def __init__(self, updatePeriod, currency, market):
 
         self.url = 'bvdata.xml'
-        monitor.Monitor.__init__(self, self.url, updatePeriod, currency, market)
+        self.currency = currency
+        self.market = market
+        monitor.Monitor.__init__(self, self.url, updatePeriod)
         self.data = self.update(self.url)
 
     def update(self, source):
