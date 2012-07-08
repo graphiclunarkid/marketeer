@@ -10,8 +10,8 @@ class Monitor:
         self.currency = currency
         self.market = market
  
-        self.offer = 32490
-        self.bid = 32410
+        self.offer = None
+        self.bid = None
 	
     def get_spread(self):
 
