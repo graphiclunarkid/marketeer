@@ -22,12 +22,12 @@ class Test_BullionVaultMonitor(test_monitor.Test_Monitor):
 
     def test_invalidMonitors(self):
 
-        with self.assertRaises(monitor.CreateError) as cm:
+        with self.assertRaises(monitor.MonitorError) as cm:
             self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod, self.invalidCurrency, self.validMarkets[0])
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid currency')
 
-        with self.assertRaises(monitor.CreateError) as cm:
+        with self.assertRaises(monitor.MonitorError) as cm:
             self.monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod, self.validCurrencies[0], self.invalidMarket)
         exception = cm.exception
         self.assertEqual(exception.message, 'Invalid market')

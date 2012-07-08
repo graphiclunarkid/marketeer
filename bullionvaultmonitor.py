@@ -16,10 +16,10 @@ class BullionVaultMonitor(monitor.Monitor):
         self.validMarkets = frozenset( ['AUXLN','AUXNY','AUXZU'] )
 
         if (self.currency not in self.validCurrencies):
-            raise monitor.CreateError('Invalid currency')
+            raise monitor.MonitorError('Invalid currency')
 
         if (self.market not in self.validMarkets):
-            raise monitor.CreateError('Invalid market')
+            raise monitor.MonitorError('Invalid market')
 
         self.data = self.update(self.url)
 
