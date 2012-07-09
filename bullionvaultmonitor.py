@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 import monitor
-import toolbox
-from xml.dom import minidom
 
 class BullionVaultMonitor(monitor.Monitor):
     '''
@@ -16,16 +14,7 @@ class BullionVaultMonitor(monitor.Monitor):
         self.currency = currency
         self.market = market
         monitor.Monitor.__init__(self, self.url, updatePeriod)
-        self.marketView = self.getMarketView(self.url)
         self.update()
-
-
-    def getMarketView(self, source):
-
-        sock = toolbox.openAnything(source)
-        xmldoc = minidom.parse(sock).documentElement
-        sock.close()
-        return xmldoc
 
 
     def update(self):
@@ -36,7 +25,7 @@ class BullionVaultMonitor(monitor.Monitor):
         Also assumes one buy and one sell price per pitch!
         '''
 
-        for pitch in self.marketView.getElementsByTagName('pitch'):
+        for pitch in self.data.getElementsByTagName('pitch'):
 
             if pitch.getAttribute('securityId') == self.market and \
                pitch.getAttribute('considerationCurrency') == self.currency:
