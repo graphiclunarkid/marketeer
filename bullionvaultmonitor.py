@@ -11,26 +11,32 @@ class BullionVaultMonitor(monitor.Monitor):
 
     def __init__(self, updatePeriod, currency, market):
 
+#        self.url = 'http://live.bullionvault.com/view_market_xml.do'
         self.url = 'bvdata.xml'
         self.currency = currency
         self.market = market
         monitor.Monitor.__init__(self, self.url, updatePeriod)
-        self.update(self.url)
+        self.marketView = self.getMarketView(self.url)
+        self.update()
 
 
-    def update(self, source):
+    def getMarketView(self, source):
+
+        sock = toolbox.openAnything(source)
+        xmldoc = minidom.parse(sock).documentElement
+        sock.close()
+        return xmldoc
+
+
+    def update(self):
         '''
-        Function to pull the latest prices from BullionVault and extract them into variables
+        Function extract prices in the selected currency, from the selected market, into variables
         
         Assumes one pitch per market/currency combination in the file.
         Also assumes one buy and one sell price per pitch!
         '''
 
-        sock = toolbox.openAnything(source)
-        xmldoc = minidom.parse(sock).documentElement
-        sock.close()
-
-        for pitch in xmldoc.getElementsByTagName('pitch'):
+        for pitch in self.marketView.getElementsByTagName('pitch'):
 
             if pitch.getAttribute('securityId') == self.market and \
                pitch.getAttribute('considerationCurrency') == self.currency:
