@@ -1,5 +1,4 @@
 import unittest
-import monitor
 import bullionvaultmonitor
 
 class Test_BullionVaultMonitor(unittest.TestCase):
