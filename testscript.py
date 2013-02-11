@@ -4,7 +4,7 @@ import bullionvaultmonitor
 from time import *
 
 
-period = 5
+period = 30
 
 
 def printstuff(mon):

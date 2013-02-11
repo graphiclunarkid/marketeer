@@ -11,8 +11,8 @@ class BullionVaultMonitor():
 
     def __init__(self, updatePeriod, currency, market):
 
-#        self.url = 'http://live.bullionvault.com/view_market_xml.do'
-        self.url = 'bvdata.xml'
+        self.url = 'http://live.bullionvault.com/view_market_xml.do'
+#        self.url = 'bvdata.xml'
 	self.updatePeriod = updatePeriod
         self.currency = currency
         self.market = market
@@ -27,8 +27,7 @@ class BullionVaultMonitor():
         Also assumes one buy and one sell price per pitch!
         '''
 
-        if ((time() - self._timestamp) > self.updatePeriod) or \
-        self._data == None:
+        if ((time() - self._timestamp) > self.updatePeriod) or self._data == None:
 
             sock = toolbox.openAnything(self.url)
             xmldoc = minidom.parse(sock).documentElement
@@ -79,7 +78,7 @@ class BullionVaultMonitor():
 
 
 class MonitorError(Exception):
-    '''Exception thrown by the Monitor class'''
+    '''Exception thrown by the BullionVaultMonitor class'''
     
     def __init__(self, message):
 
