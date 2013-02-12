@@ -1,0 +1,23 @@
+MARKETEER
+---------
+A trading-bot project written in python.
+
+SUPPORTED MARKETS
+-----------------
+Monitoring only: Bullion Vault (http://www.bullionvault.com/)
+
+BACKLOG
+-------
+https://trello.com/board/marketeer/50369a0c3a5753ff20071050
+
+USAGE
+-----
+Run testscript.py to see live data from the Bullion Vault London Gold
+GBP market. The script calls the Bullion Vault public API twice, waiting 30s
+between each call, and displays the current bid price, offer price, and spread
+each time.
+
+COPYRIGHT
+---------
+Copyright 2013 Richard King (mail@richardskingdom.net)
+
