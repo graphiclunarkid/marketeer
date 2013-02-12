@@ -9,7 +9,7 @@ class BullionVaultMonitor():
     Class to monitor market prices at BullionVault
     '''
 
-    def __init__(self, updatePeriod, currency, market):
+    def __init__(self, updatePeriod=30, currency="GBP", market="AUXLN"):
 
         self.url = 'http://live.bullionvault.com/view_market_xml.do'
 #        self.url = 'bvdata.xml'
