@@ -1,10 +1,7 @@
-#!/bin/python
+#!/usr/bin/python
 
 import bullionvaultmonitor
 from time import *
-
-
-period = 30
 
 
 def printstuff(mon):
@@ -14,9 +11,9 @@ def printstuff(mon):
 
 
 def main():
-    mon = bullionvaultmonitor.BullionVaultMonitor(period, "GBP", "AUXLN")
+    mon = bullionvaultmonitor.BullionVaultMonitor()
     printstuff(mon)
-    sleep(period + 1)
+    sleep(mon.updatePeriod + 1)
     printstuff(mon)
 
 
