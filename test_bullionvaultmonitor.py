@@ -43,6 +43,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         self.assertEqual(offer, 33950, 'Offer price was not imported correctly')
         self.assertEqual(spread, 40, 'Spread was not calculated imported correctly')
 
+        sleep(self.updatePeriod / 2)
         monitor.url = 'bvdata2.xml'
         bid2 = monitor.bid
         offer2 = monitor.offer
