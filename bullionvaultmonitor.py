@@ -87,6 +87,7 @@ class BullionVaultMonitor():
 
     def get_spread(self):
 
+        self._update()
         return (self._offer - self._bid)
 
     spread = property(get_spread)
