@@ -43,6 +43,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         while (len(validMonitors) > 0):
 
+            self.assertIsNotNone(monitor.spread, 'Spread wasn\'t calculated')
             self.assertIsNotNone(monitor.bid, 'Bid price is not set')
             self.assertIsNotNone(monitor.offer, 'Offer price is not set')
             self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
