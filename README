@@ -19,7 +19,7 @@ each time.
 
 COPYRIGHT
 ---------
-Copyright 2013 Richard King (mail@richardskingdom.net)
+Copyright 2013 Richard King, Adam Spragg
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -37,4 +37,8 @@ The openAnything function was derived from the Dive Into Python book
 (http://www.diveintopython.net/) which is copyright 2000, 2001, 2002, 2003,
 2004 Mark Pilgrim (josh@servercobra.com). It is included here under the terms
 of the Python license (http://www.diveintopython.net/appendix/license.html)
+
+CONTACT
+-------
+Richard King <mail@richardskingdom.net>
 
