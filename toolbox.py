@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2013 Richard King (mail@richardskingdom.net)
+# Copyright 2013 Richard King
 #
 # This file is part of Marketeer.
 #
