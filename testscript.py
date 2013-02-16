@@ -21,9 +21,9 @@ import bullionvaultmonitor
 from time import *
 
 def printstuff(mon):
-    print "Bid:", mon.bid
-    print "Offer:", mon.offer
-    print "Spread:", mon.spread
+    print "Bid:", mon.price.bid
+    print "Offer:", mon.price.offer
+    print "Spread:", mon.price.spread
 
 def main():
     mon = bullionvaultmonitor.BullionVaultMonitor()
