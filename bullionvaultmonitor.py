@@ -44,13 +44,15 @@ class BullionVaultMonitor():
         Also assumes one buy and one sell price per pitch!
         '''
 
-        if ((time() - self._timestamp) > self.updatePeriod) or self._data == None:
+        now = time()
+
+        if ((now - self._timestamp) > self.updatePeriod) or self._data == None:
 
             sock = toolbox.openAnything(self.url)
             xmldoc = minidom.parse(sock).documentElement
             sock.close()
             self._data = xmldoc
-            self._timestamp = time()
+            self._timestamp = now
 
         for pitch in self._data.getElementsByTagName('pitch'):
 
