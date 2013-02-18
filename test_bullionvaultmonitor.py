@@ -41,11 +41,13 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         while (len(validMonitors) > 0):
 
+            self.assertEqual(monitor.price.exchange, 'BullionVault', 'Wrong exchange')
+            self.assertEqual(monitor.price.security, 'XAU', 'Wrong security')
             self.assertIsNotNone(monitor.price.spread, 'Spread wasn\'t calculated')
             self.assertGreaterEqual(monitor.price.spread, 0, 'Spread is negative')
             self.assertIsNotNone(monitor.price.bid, 'Bid price is not set')
             self.assertIsNotNone(monitor.price.offer, 'Offer price is not set')
-
+            self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
             monitor = validMonitors.pop()
 
 
