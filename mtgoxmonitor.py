@@ -17,6 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
+import price
+from time import time
+
 class MtgoxMonitor():
     '''
     Class to monitor market prices at MtGox
@@ -24,31 +27,21 @@ class MtgoxMonitor():
 
     def __init__(self, updatePeriod=30):
         self.updatePeriod = updatePeriod
+        self.url = 'example.com'
 
     def _update(self):
 
-        self._bid = 20
-        self._offer = 22
+        now = time()
 
-    def get_bid(self):
+        bid = 20
+        offer = 22
 
-        self._update()
-        return self._bid
-
-    bid = property(get_bid)
-
-    def get_offer(self):
+        self._price = price.Price('MtGox', 'BTC', 'GBP', bid, offer, { 'url': self.url }, now)
+    
+    def get_price(self):
 
         self._update()
-        return self._offer
+        return self._price
 
-    offer = property(get_offer)
-
-    def get_spread(self):
-
-        self._update()
-        return self._offer - self._bid
-
-    spread = property(get_spread)
-
+    price = property(get_price)
 

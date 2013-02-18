@@ -28,8 +28,12 @@ class Test_MtgoxMonitor(unittest.TestCase):
         self.assertIsNotNone(monitor.updatePeriod, 'Update period is not set')
         self.assertEqual(monitor.updatePeriod, 30, 'Default update period not set correctly')
 
-        self.assertIsNotNone(monitor.spread, 'Spread is not set')
-        self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
-        self.assertIsNotNone(monitor.bid, 'Bid is not set')
-        self.assertIsNotNone(monitor.offer, 'Offer is not set')
+        self.assertEqual(monitor.price.exchange, 'MtGox', 'Wrong exchange')
+        self.assertEqual(monitor.price.security, 'BTC', 'Wrong security')
+
+        self.assertIsNotNone(monitor.price.spread, 'Spread is not set')
+        self.assertGreaterEqual(monitor.price.spread, 0, 'Spread is negative')
+        self.assertIsNotNone(monitor.price.bid, 'Bid is not set')
+        self.assertIsNotNone(monitor.price.offer, 'Offer is not set')
+        self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
 
