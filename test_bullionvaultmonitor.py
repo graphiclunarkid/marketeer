@@ -79,5 +79,3 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         self.assertEqual(spread2, 30, 'Spread not updated after update was due')
 
 
-suite = unittest.TestLoader().loadTestsFromTestCase(Test_BullionVaultMonitor)
-unittest.TextTestRunner(verbosity=2).run(suite)
