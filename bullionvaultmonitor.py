@@ -18,6 +18,7 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 import toolbox
+import price
 from time import time
 from xml.dom import minidom
 
@@ -44,53 +45,47 @@ class BullionVaultMonitor():
         Also assumes one buy and one sell price per pitch!
         '''
 
-        if ((time() - self._timestamp) > self.updatePeriod) or self._data == None:
+        now = time()
+
+        if ((now - self._timestamp) > self.updatePeriod) or self._data == None:
 
             sock = toolbox.openAnything(self.url)
             xmldoc = minidom.parse(sock).documentElement
             sock.close()
             self._data = xmldoc
-            self._timestamp = time()
+            self._timestamp = now
 
         for pitch in self._data.getElementsByTagName('pitch'):
 
             if pitch.getAttribute('securityId') == self.market and \
                 pitch.getAttribute('considerationCurrency') == self.currency:
 
-                for price in pitch.getElementsByTagName('price'):
+                for p in pitch.getElementsByTagName('price'):
 
-                    if price.getAttribute('actionIndicator') == 'B':
+                    if p.getAttribute('actionIndicator') == 'B':
 
-                        self._bid = int(price.getAttribute('limit'))
+                        bid = int(p.getAttribute('limit'))
 
-                    elif price.getAttribute('actionIndicator') == 'S':
+                    elif p.getAttribute('actionIndicator') == 'S':
 
-                        self._offer = int(price.getAttribute('limit'))
+                        offer = int(p.getAttribute('limit'))
 
                     else:
 
                         raise MonitorError('No prices were found')
 
-    def get_offer(self):
+        if not bid or not offer:
+            raise MonitorError('Missing part of price')
+
+        self._price = price.Price('BullionVault', 'XAU', self.currency,
+                bid, offer, { 'url': self.url }, now)
+
+    def get_price(self):
 
         self._update()
-        return self._offer
+        return self._price
 
-    offer = property(get_offer)
-
-    def get_bid(self):
-
-        self._update()
-        return self._bid
-
-    bid = property(get_bid)
-
-    def get_spread(self):
-
-        self._update()
-        return (self._offer - self._bid)
-
-    spread = property(get_spread)
+    price = property(get_price)
 
 
 class MonitorError(Exception):

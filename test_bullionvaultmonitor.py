@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Copyright 2013 Richard King
 #
 # This file is part of Marketeer.
@@ -43,11 +41,13 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         while (len(validMonitors) > 0):
 
-            self.assertIsNotNone(monitor.spread, 'Spread wasn\'t calculated')
-            self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
-            self.assertIsNotNone(monitor.bid, 'Bid price is not set')
-            self.assertIsNotNone(monitor.offer, 'Offer price is not set')
-
+            self.assertEqual(monitor.price.exchange, 'BullionVault', 'Wrong exchange')
+            self.assertEqual(monitor.price.security, 'XAU', 'Wrong security')
+            self.assertIsNotNone(monitor.price.spread, 'Spread wasn\'t calculated')
+            self.assertGreaterEqual(monitor.price.spread, 0, 'Spread is negative')
+            self.assertIsNotNone(monitor.price.bid, 'Bid price is not set')
+            self.assertIsNotNone(monitor.price.offer, 'Offer price is not set')
+            self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
             monitor = validMonitors.pop()
 
 
@@ -56,30 +56,28 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,'GBP','AUXLN')
         monitor.url = 'bvdata.xml'
 
-        bid = monitor.bid
-        offer = monitor.offer
-        spread = monitor.spread
+        bid = monitor.price.bid
+        offer = monitor.price.offer
+        spread = monitor.price.spread
         self.assertEqual(bid, 33910, 'Bid price was not imported correctly')
         self.assertEqual(offer, 33950, 'Offer price was not imported correctly')
         self.assertEqual(spread, 40, 'Spread was not calculated imported correctly')
 
         sleep(self.updatePeriod / 2)
         monitor.url = 'bvdata2.xml'
-        bid2 = monitor.bid
-        offer2 = monitor.offer
-        spread2 = monitor.spread
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
         self.assertEqual(bid2, bid, 'Bid price changed before update was due')
         self.assertEqual(offer2, offer, 'Offer price changed before update was due')
         self.assertEqual(spread2, spread, 'Spread changed before update was due')
 
         sleep(self.updatePeriod)
-        bid2 = monitor.bid
-        offer2 = monitor.offer
-        spread2 = monitor.spread
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
         self.assertEqual(bid2, 33920, 'Bid price not updated after update was due')
         self.assertEqual(offer2, offer, 'Offer price changed but wasn\'t supposed to')
         self.assertEqual(spread2, 30, 'Spread not updated after update was due')
 
 
-suite = unittest.TestLoader().loadTestsFromTestCase(Test_BullionVaultMonitor)
-unittest.TextTestRunner(verbosity=2).run(suite)
