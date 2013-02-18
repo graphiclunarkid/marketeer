@@ -22,14 +22,11 @@ import mtgoxmonitor
 
 class Test_MtgoxMonitor(unittest.TestCase):
 
-    def setUp(self):
-        self.updatePeriod = 30
-
     def test_monitorAttributes(self):
 
-        monitor = mtgoxmonitor.MtgoxMonitor(self.updatePeriod)
+        monitor = mtgoxmonitor.MtgoxMonitor()
         self.assertIsNotNone(monitor.updatePeriod, 'Update period is not set')
-        self.assertEqual(monitor.updatePeriod, self.updatePeriod, 'Update period not set correctly')
+        self.assertEqual(monitor.updatePeriod, 30, 'Default update period not set correctly')
 
         self.assertIsNotNone(monitor.spread, 'Spread is not set')
         self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')

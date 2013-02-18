@@ -22,7 +22,7 @@ class MtgoxMonitor():
     Class to monitor market prices at MtGox
     '''
 
-    def __init__(self, updatePeriod):
+    def __init__(self, updatePeriod=30):
         self.updatePeriod = updatePeriod
 
     def _update(self):
