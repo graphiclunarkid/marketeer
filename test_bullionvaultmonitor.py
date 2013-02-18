@@ -1,19 +1,19 @@
 #!/usr/bin/python
 
-# Copyright 2013 Richard King (mail@richardskingdom.net)
-# 
+# Copyright 2013 Richard King
+#
 # This file is part of Marketeer.
-# 
+#
 # Marketeer is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Marketeer is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -43,9 +43,10 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
         while (len(validMonitors) > 0):
 
+            self.assertIsNotNone(monitor.spread, 'Spread wasn\'t calculated')
+            self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
             self.assertIsNotNone(monitor.bid, 'Bid price is not set')
             self.assertIsNotNone(monitor.offer, 'Offer price is not set')
-            self.assertGreaterEqual(monitor.spread, 0, 'Spread is negative')
 
             monitor = validMonitors.pop()
 
