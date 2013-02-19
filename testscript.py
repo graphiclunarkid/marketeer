@@ -18,6 +18,7 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 import bullionvaultmonitor
+import mtgoxmonitor
 from time import *
 
 def printstuff(mon):
@@ -28,11 +29,14 @@ def printstuff(mon):
     print "Spread:", mon.price.spread, mon.price.currency
     print "Timestamp:", mon.price.timestamp
 
-def main():
-    mon = bullionvaultmonitor.BullionVaultMonitor()
+def checkmon(mon):
     printstuff(mon)
     sleep(mon.updatePeriod + 1)
     printstuff(mon)
+
+def main():
+    checkmon(bullionvaultmonitor.BullionVaultMonitor())
+    checkmon(mtgoxmonitor.MtgoxMonitor())
 
 if __name__ == "__main__":
     main()
