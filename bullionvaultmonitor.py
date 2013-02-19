@@ -74,9 +74,6 @@ class BullionVaultMonitor():
 
                         raise MonitorError('No prices were found')
 
-        if not bid or not offer:
-            raise MonitorError('Missing part of price')
-
         self._price = price.Price('BullionVault', 'XAU', self.currency,
                 bid, offer, { 'url': self.url }, now)
 

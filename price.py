@@ -32,7 +32,18 @@ class Price():
         timestamp   -- Date/time the price was retrieved/accurate
     '''
 
-    def __init__(self, exchange, security, currency, bid, offer, data, timestamp=time()):
+    def __init__(self, exchange, security, currency, bid, offer, data=None, timestamp=time()):
+        if not exchange \
+                or not security \
+                or not currency \
+                or not bid \
+                or not offer \
+                or not timestamp:
+            raise TypeError('Invalid arguments')
+
+        if bid >= offer:
+            raise TypeError('Bid >= offer');
+
         self.exchange = exchange
         self.security = security
         self.currency = currency
