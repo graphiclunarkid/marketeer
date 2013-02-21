@@ -29,8 +29,8 @@ class BullionVaultMonitor():
 
     def __init__(self, updatePeriod=30, currency="GBP", market="AUXLN"):
 
-#        self.url = 'http://live.bullionvault.com/view_market_xml.do'
-        self.url = 'bvdata.xml'
+        self.url = 'http://live.bullionvault.com/view_market_xml.do'
+#        self.url = 'bvdata.xml'
         self.updatePeriod = updatePeriod
         self.currency = currency
         self.market = market
