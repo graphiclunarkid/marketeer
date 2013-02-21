@@ -19,7 +19,7 @@
 
 import toolbox
 import price
-from time import time
+from time import time, sleep
 from xml.dom import minidom
 
 class BullionVaultMonitor():
@@ -29,8 +29,8 @@ class BullionVaultMonitor():
 
     def __init__(self, updatePeriod=30, currency="GBP", market="AUXLN"):
 
-        self.url = 'http://live.bullionvault.com/view_market_xml.do'
-#        self.url = 'bvdata.xml'
+#        self.url = 'http://live.bullionvault.com/view_market_xml.do'
+        self.url = 'bvdata.xml'
         self.updatePeriod = updatePeriod
         self.currency = currency
         self.market = market
@@ -96,3 +96,14 @@ class MonitorError(Exception):
 
         return repr(self.message)
 
+
+def _test(mon):
+    mon.price.printstate()
+    sleep(mon.updatePeriod + 1)
+    mon.price.printstate()
+
+def main():
+    _test(BullionVaultMonitor())
+
+if __name__ == "__main__":
+    main()
