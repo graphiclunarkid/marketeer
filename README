@@ -5,6 +5,7 @@ A trading-bot project written in python.
 SUPPORTED MARKETS
 -----------------
 Monitoring only: Bullion Vault (http://www.bullionvault.com/)
+Monitoring only: MtGox (https://mtgox.com/)
 
 BACKLOG
 -------
@@ -12,10 +13,13 @@ https://trello.com/board/marketeer/50369a0c3a5753ff20071050
 
 USAGE
 -----
-Run testscript.py to see live data from the Bullion Vault London Gold
-GBP market. The script calls the Bullion Vault public API twice, waiting 30s
-between each call, and displays the current bid price, offer price, and spread
-each time.
+Run bullionvaultmonitor.py to see live data from the Bullion Vault London Gold
+GBP market.
+
+Run mtgoxmonitor.py to see live data from the MtGox BTC/GBP market.
+
+The scripts call their respective public APIs twice, waiting 30s between each
+call, and display the current bid price, offer price, and spread each time.
 
 COPYRIGHT
 ---------
