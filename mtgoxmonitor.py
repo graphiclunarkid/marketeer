@@ -19,7 +19,7 @@
 
 import toolbox
 import price
-from time import time
+from time import time, sleep
 import json
 
 class MtgoxMonitor():
@@ -33,9 +33,11 @@ class MtgoxMonitor():
 
         self.updatePeriod = updatePeriod
         self.url = 'https://mtgox.com/api/1/BTC' + currency + '/ticker'
+#        self.url = 'mtgdata'
         self.currency = currency
         self._data = None
         self._timestamp = time()
+
 
     def _update(self):
         '''
@@ -65,4 +67,18 @@ class MtgoxMonitor():
         return self._price
 
     price = property(get_price)
+
+
+def _test(mon):
+    mon.price.printstate()
+    sleep(mon.updatePeriod + 1)
+    mon.price.printstate()
+
+
+def main():
+    _test(MtgoxMonitor())
+
+
+if __name__ == "__main__":
+    main()
 
