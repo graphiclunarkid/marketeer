@@ -21,18 +21,10 @@ import bullionvaultmonitor
 import mtgoxmonitor
 from time import *
 
-def printstuff(mon):
-    print "Exchange:", mon.price.exchange
-    print "Security:", mon.price.security
-    print "Bid:", mon.price.bid, mon.price.currency
-    print "Offer:", mon.price.offer, mon.price.currency
-    print "Spread:", mon.price.spread, mon.price.currency
-    print "Timestamp:", mon.price.timestamp
-
 def checkmon(mon):
-    printstuff(mon)
+    mon.price.printstate()
     sleep(mon.updatePeriod + 1)
-    printstuff(mon)
+    mon.price.printstate()
 
 def main():
     checkmon(bullionvaultmonitor.BullionVaultMonitor())
@@ -40,3 +32,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

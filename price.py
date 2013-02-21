@@ -54,7 +54,16 @@ class Price():
 
 
     def get_spread(self):
-
         return (self.offer - self.bid)
 
     spread = property(get_spread)
+
+
+    def printstate(self):
+      print "Exchange:", self.exchange
+      print "Security:", self.security
+      print "Bid:", self.bid, self.currency
+      print "Offer:", self.offer, self.currency
+      print "Spread:", self.spread, self.currency
+      print "Timestamp:", self.timestamp
+
