@@ -36,7 +36,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
             for j in self.validMarkets:
 
-                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,i,j))
+                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency=i,market=j))
 
         monitor = validMonitors.pop()
 
@@ -54,7 +54,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def test_monitorRefresh(self):
 
-        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,'GBP','AUXLN')
+        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency='GBP',market='AUXLN')
 
         bid = monitor.price.bid
         offer = monitor.price.offer
