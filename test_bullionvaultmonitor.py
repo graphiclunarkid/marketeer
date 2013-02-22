@@ -23,6 +23,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def setUp(self):
 
+        self.url = 'bvdata.xml'
         self.updatePeriod = 10
         self.validCurrencies = list( ['EUR','GBP','USD'] )
         self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
@@ -35,7 +36,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
             for j in self.validMarkets:
 
-                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,i,j))
+                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,i,j))
 
         monitor = validMonitors.pop()
 
@@ -53,8 +54,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def test_monitorRefresh(self):
 
-        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,'GBP','AUXLN')
-        monitor.url = 'bvdata.xml'
+        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,'GBP','AUXLN')
 
         bid = monitor.price.bid
         offer = monitor.price.offer

@@ -24,7 +24,7 @@ class Test_MtgoxMonitor(unittest.TestCase):
 
     def test_monitorAttributes(self):
 
-        monitor = mtgoxmonitor.MtgoxMonitor()
+        monitor = mtgoxmonitor.MtgoxMonitor(url = 'mtgdata', request = '')
         self.assertIsNotNone(monitor.updatePeriod, 'Update period is not set')
         self.assertEqual(monitor.updatePeriod, 30, 'Default update period not set correctly')
 

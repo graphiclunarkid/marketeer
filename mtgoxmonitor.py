@@ -29,11 +29,15 @@ class MtgoxMonitor():
     https://en.bitcoin.it/wiki/MtGox/API/HTTP/v1
     '''
 
-    def __init__(self, updatePeriod=30, currency='GBP'):
+    def __init__(self,\
+                 updatePeriod=30,\
+                 url = 'https://mtgox.com/api/1/',\
+                 security = 'BTC',\
+                 currency = 'GBP',\
+                 request = '/ticker'):
 
         self.updatePeriod = updatePeriod
-        self.url = 'https://mtgox.com/api/1/BTC' + currency + '/ticker'
-#        self.url = 'mtgdata'
+        self.url = url + security + currency + request
         self.currency = currency
         self._data = None
         self._timestamp = time()
