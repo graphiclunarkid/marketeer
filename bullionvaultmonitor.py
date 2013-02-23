@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright (C) 2013 Richard King, Adam Spragg
+# Copyright (C) 2013 - see the README file for a list of authors.
 #
 # This file is part of Marketeer.
 #
