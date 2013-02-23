@@ -24,7 +24,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
     def setUp(self):
 
         self.url = 'bvdata.xml'
-        self.updatePeriod = 10
+        self.updatePeriod = 1
         self.validCurrencies = list( ['EUR','GBP','USD'] )
         self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
 
