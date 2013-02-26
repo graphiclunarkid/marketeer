@@ -54,7 +54,7 @@ class Price():
 
 
     def get_spread(self):
-        return (self.offer - self.bid)
+        return round((self.offer - self.bid), 10)
 
     spread = property(get_spread)
 

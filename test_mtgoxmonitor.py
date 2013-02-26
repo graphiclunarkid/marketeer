@@ -17,12 +17,19 @@
 
 import unittest
 import mtgoxmonitor
+from time import sleep
 
 class Test_MtgoxMonitor(unittest.TestCase):
 
+    def setUp(self):
+
+        self.url = 'mtgdata'
+        self.request = ''
+        self.updatePeriod = 1
+
     def test_monitorAttributes(self):
 
-        monitor = mtgoxmonitor.MtgoxMonitor(url = 'mtgdata', request = '')
+        monitor = mtgoxmonitor.MtgoxMonitor(url = self.url, request = self.request)
         self.assertIsNotNone(monitor.updatePeriod, 'Update period is not set')
         self.assertEqual(monitor.updatePeriod, 30, 'Default update period not set correctly')
 
@@ -34,4 +41,15 @@ class Test_MtgoxMonitor(unittest.TestCase):
         self.assertIsNotNone(monitor.price.bid, 'Bid is not set')
         self.assertIsNotNone(monitor.price.offer, 'Offer is not set')
         self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
+
+    def test_monitorRefresh(self):
+
+        monitor = mtgoxmonitor.MtgoxMonitor(updatePeriod = self.updatePeriod, url = self.url, request = self.request)
+
+        bid = monitor.price.bid
+        offer = monitor.price.offer
+        spread = monitor.price.spread
+        self.assertEqual(bid, 19.5255, 'Bid price was not imported correctly')
+        self.assertEqual(offer, 19.54141, 'Offer price was not imported correctly')
+        self.assertEqual(spread, 0.01591, 'Spread was not calculated correctly')
 
