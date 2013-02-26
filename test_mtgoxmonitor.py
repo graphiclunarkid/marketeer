@@ -53,3 +53,22 @@ class Test_MtgoxMonitor(unittest.TestCase):
         self.assertEqual(offer, 19.54141, 'Offer price was not imported correctly')
         self.assertEqual(spread, 0.01591, 'Spread was not calculated correctly')
 
+
+        sleep(self.updatePeriod / 2)
+        monitor.url = 'mtgdata2'
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
+        self.assertEqual(bid2, bid, 'Bid price changed before update was due')
+        self.assertEqual(offer2, offer, 'Offer price changed before update was due')
+        self.assertEqual(spread2, spread, 'Spread changed before update was due')
+
+        sleep(self.updatePeriod)
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
+        self.assertEqual(bid2, 19.5155, 'Bid price changed but wasn\'t supposed to')
+        self.assertEqual(offer2, offer, 'Offer price not updated after update was due')
+        self.assertEqual(spread2, 0.02591, 'Spread not updated after update was due')
+
+
