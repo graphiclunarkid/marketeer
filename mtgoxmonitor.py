@@ -19,8 +19,10 @@
 
 import toolbox
 import price
+
 from time import time, sleep
 import json
+from decimal import *
 
 class MtgoxMonitor():
     '''
@@ -34,12 +36,14 @@ class MtgoxMonitor():
                  url = 'https://mtgox.com/api/1/',\
                  security = 'BTC',\
                  currency = 'GBP',\
-                 request = '/ticker'):
+                 request = '/ticker',\
+                 exponent = '0.00001'):
 
         self.updatePeriod = updatePeriod
         self._url = url
         self._currency = currency
         self._security = security
+        self._exponent = exponent
         self._request = request
         self._data = None
         self._timestamp = time()
@@ -114,11 +118,10 @@ class MtgoxMonitor():
         sock.close()
         self._timestamp = now
 
-        self._price = price.Price('MtGox', 'BTC', self.currency,
-                float(self._data['return']['buy']['value']),
-                float(self._data['return']['sell']['value']),
-                { 'url': self.url },
-                now)
+        self._price = price.Price('MtGox', 'BTC', self.currency,\
+                self._data['return']['buy']['value_int'],\
+                self._data['return']['sell']['value_int'],\
+                self._exponent, { 'url': self.url }, now)
 
     def get_price(self):
 

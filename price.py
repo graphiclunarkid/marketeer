@@ -16,6 +16,7 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 from time import time
+from decimal import *
 
 class Price():
     '''
@@ -32,7 +33,7 @@ class Price():
         timestamp   -- Date/time the price was retrieved/accurate
     '''
 
-    def __init__(self, exchange, security, currency, bid, offer, data=None, timestamp=time()):
+    def __init__(self, exchange, security, currency, bid, offer, exponent='1', data=None, timestamp=time()):
         if not exchange \
                 or not security \
                 or not currency \
@@ -47,23 +48,36 @@ class Price():
         self.exchange = exchange
         self.security = security
         self.currency = currency
-        self.bid = bid
-        self.offer = offer
+        self._bid = Decimal(bid)
+        self._offer = Decimal(offer)
+        self.exponent = Decimal(exponent)
         self.data = data
         self.timestamp = timestamp
 
+    def get_bid(self):
+
+        return (self._bid * self.exponent)
+
+    bid = property(get_bid)
+
+    def get_offer(self):
+
+        return (self._offer * self.exponent)
+
+    offer = property(get_offer)
 
     def get_spread(self):
-        return round((self.offer - self.bid), 10)
+
+        return (self.offer - self.bid)
 
     spread = property(get_spread)
 
-
     def printstate(self):
-      print "Exchange:", self.exchange
-      print "Security:", self.security
-      print "Bid:", self.bid, self.currency
-      print "Offer:", self.offer, self.currency
-      print "Spread:", self.spread, self.currency
-      print "Timestamp:", self.timestamp
+
+        print "Exchange:", self.exchange
+        print "Security:", self.security
+        print "Bid:", self.bid, self.currency
+        print "Offer:", self.offer, self.currency
+        print "Spread:", self.spread, self.currency
+        print "Timestamp:", self.timestamp
 

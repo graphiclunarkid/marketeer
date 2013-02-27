@@ -18,6 +18,7 @@
 import unittest
 import mtgoxmonitor
 from time import sleep
+from decimal import *
 
 class Test_MtgoxMonitor(unittest.TestCase):
 
@@ -49,9 +50,9 @@ class Test_MtgoxMonitor(unittest.TestCase):
         bid = monitor.price.bid
         offer = monitor.price.offer
         spread = monitor.price.spread
-        self.assertEqual(bid, 19.5255, 'Bid price was not imported correctly')
-        self.assertEqual(offer, 19.54141, 'Offer price was not imported correctly')
-        self.assertEqual(spread, 0.01591, 'Spread was not calculated correctly')
+        self.assertEqual(bid, Decimal('19.52550'), 'Bid price was not imported correctly')
+        self.assertEqual(offer, Decimal('19.54141'), 'Offer price was not imported correctly')
+        self.assertEqual(spread, Decimal('0.01591'), 'Spread was not calculated correctly')
 
 
         sleep(self.updatePeriod / 2)
@@ -67,8 +68,8 @@ class Test_MtgoxMonitor(unittest.TestCase):
         bid2 = monitor.price.bid
         offer2 = monitor.price.offer
         spread2 = monitor.price.spread
-        self.assertEqual(bid2, 19.5155, 'Bid price changed but wasn\'t supposed to')
+        self.assertEqual(bid2, Decimal('19.51550'), 'Bid price changed but wasn\'t supposed to')
         self.assertEqual(offer2, offer, 'Offer price not updated after update was due')
-        self.assertEqual(spread2, 0.02591, 'Spread not updated after update was due')
+        self.assertEqual(spread2, Decimal('0.02591'), 'Spread not updated after update was due')
 
 

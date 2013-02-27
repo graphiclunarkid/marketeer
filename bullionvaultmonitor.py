@@ -28,10 +28,10 @@ class BullionVaultMonitor():
     '''
 
     def __init__(self, \
-	             updatePeriod=30,\
-				 url="http://live.bullionvault.com/view_market_xml.do",\
-				 currency="GBP",\
-				 market="AUXLN"):
+                 updatePeriod=30,\
+                 url="http://live.bullionvault.com/view_market_xml.do",\
+                 currency="GBP",\
+                 market="AUXLN"):
 
         self.updatePeriod = updatePeriod
         self.url = url
@@ -77,8 +77,13 @@ class BullionVaultMonitor():
 
                         raise MonitorError('No prices were found')
 
-        self._price = price.Price('BullionVault', 'XAU', self.currency,
-                bid, offer, { 'url': self.url }, now)
+        self._price = price.Price(exchange='BullionVault',\
+                                  security='XAU',\
+                                  currency=self.currency,\
+                                  bid=bid,\
+                                  offer=offer,\
+                                  data={ 'url': self.url },\
+                                  timestamp=now)
 
     def get_price(self):
 
