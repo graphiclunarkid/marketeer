@@ -58,3 +58,28 @@ class Price():
         return (self.offer - self.bid)
 
     spread = property(get_spread)
+
+
+class Store():
+    '''
+    Class to encapsulate a store of prices
+    '''
+
+    def __init__(self, fname):
+        self._fname = fname
+        return
+
+
+    def save(self, p):
+        '''
+        Save a price to a price store
+        '''
+        return
+
+
+    def load(self, exchange, security, currency):
+        '''
+        Load a list of prices from a price store
+        '''
+        return
+

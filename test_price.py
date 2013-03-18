@@ -29,3 +29,12 @@ class Test_Price(unittest.TestCase):
         self.assertRaises(TypeError, price.Price, 'dummy', 'dummy', 'GBP', 0, 150)
         self.assertRaises(TypeError, price.Price, 'dummy', 'dummy', 'GBP', 150, 100)
 
+
+    def test_store(self):
+
+        p = price.Price('dummy', 'dummy', 'GBP', 100, 150)
+        s = price.Store('test-price.sqlite')
+
+        s.save(p)
+        self.assertEqual(s.load('dummy', 'dummy', 'GBP'), [p], 'Store save/load failed')
+
