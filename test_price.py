@@ -15,6 +15,7 @@
 
 import unittest
 import price
+import os
 
 class Test_Price(unittest.TestCase):
 
@@ -33,8 +34,12 @@ class Test_Price(unittest.TestCase):
     def test_store(self):
 
         p = price.Price('dummy', 'dummy', 'GBP', 100, 150)
-        s = price.Store('test-price.sqlite')
+        s = price.Store('test_price.sqlite')
 
         s.save(p)
         self.assertEqual(s.load('dummy', 'dummy', 'GBP'), [p], 'Store save/load failed')
+        s.close()
 
+
+    def tearDown(self):
+        os.remove('test_price.sqlite')
