@@ -43,7 +43,7 @@ class Price():
             raise TypeError('Invalid arguments')
 
         if bid >= offer:
-            raise TypeError('Bid >= offer');
+            raise TypeError('Bid >= offer')
 
         self.exchange = exchange
         self.security = security
