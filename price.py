@@ -73,7 +73,9 @@ class Store():
         self._fname = fname
         self._store = sqlite3.connect(fname)
 
-        self._store.execute("""CREATE TABLE IF NOT EXISTS price (
+        c = self._store.cursor()
+
+        c.execute("""CREATE TABLE IF NOT EXISTS price (
                 exchange TEXT,
                 security TEXT,
                 currency TEXT,
@@ -89,8 +91,14 @@ class Store():
         '''
         Save a price to a price store
         '''
-        self._store.execute("""INSERT INTO price (exchange, security, currency, timestamp, bid, offer)
-                VALUES ('', '', '', 0, 0, 0)""")
+        c = self._store.cursor()
+
+        c.execute("""INSERT INTO price (exchange, security, currency, timestamp, bid, offer)
+                VALUES (?, ?, ?, ?, ?, ?)""",
+                (p.exchange, p.security, p.currency, int(p.timestamp), p.bid, p.offer))
+
+        self._store.commit()
+
         return
 
 
