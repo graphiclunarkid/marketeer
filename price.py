@@ -106,10 +106,23 @@ class Store():
         '''
         Load a list of prices from a price store
         '''
-        return
+        c = self._store.cursor()
+
+        c.execute("""SELECT exchange, security, currency, timestamp, bid, offer
+                FROM price
+                WHERE exchange = ?
+                AND security = ?
+                AND currency = ?""",
+                (exchange, security, currency));
+
+        r = []
+        for row in c:
+            r.append(Price(row[0], row[1], row[2], row[4], row[5], None, row[3]))
+
+        return r
 
 
-    def close():
+    def close(self):
         '''
         Close a price store
         '''

@@ -16,6 +16,7 @@
 import unittest
 import price
 import os
+from time import time
 
 class Test_Price(unittest.TestCase):
 
@@ -32,14 +33,48 @@ class Test_Price(unittest.TestCase):
 
 
     def test_store(self):
+        # Supply integer timestamp, as it gets rounded in the database, and
+        # we want to check for equality later
+        p = price.Price('dummy', 'dummy', 'GBP', 100, 150, timestamp = int(time()))
 
-        p = price.Price('dummy', 'dummy', 'GBP', 100, 150)
+        s = price.Store('test_price.sqlite')
+        s.save(p)
+
+        # Load data we've just saved
+        all = s.load('dummy', 'dummy', 'GBP')
+        self.assertEqual(len(all), 1, 'Incorrect number of rows returned')
+
+        p2 = all[0]
+        self.assertEqual(p.exchange, p2.exchange)
+        self.assertEqual(p.security, p2.security)
+        self.assertEqual(p.currency, p2.currency)
+        self.assertEqual(p.bid, p2.bid)
+        self.assertEqual(p.offer, p2.offer)
+        self.assertEqual(p.timestamp, p2.timestamp)
+
+        s.close()
+
+        # Close and re-open database to confirm data is still there
         s = price.Store('test_price.sqlite')
 
-        s.save(p)
-        self.assertEqual(s.load('dummy', 'dummy', 'GBP'), [p], 'Store save/load failed')
+        all = s.load('dummy', 'dummy', 'GBP')
+        self.assertEqual(len(all), 1, 'Incorrect number of rows returned')
+
+        p2 = all[0]
+        self.assertEqual(p.exchange, p2.exchange)
+        self.assertEqual(p.security, p2.security)
+        self.assertEqual(p.currency, p2.currency)
+        self.assertEqual(p.bid, p2.bid)
+        self.assertEqual(p.offer, p2.offer)
+        self.assertEqual(p.timestamp, p2.timestamp)
+
         s.close()
 
 
     def tearDown(self):
-        os.remove('test_price.sqlite')
+        try:
+            # TODO: Why does this fail?
+            os.remove('test_price.sqlite')
+        except:
+            pass
+        return
