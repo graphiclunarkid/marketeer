@@ -73,15 +73,15 @@ class Store():
         self._fname = fname
         self._store = sqlite3.connect(fname)
 
-        if 1: # database has no tables
-            self._store.execute("""CREATE TABLE price (
-                    exchange TEXT,
-                    security TEXT,
-                    currency TEXT,
-                    timestamp INTEGER,
-                    bid FLOAT,
-                    offer FLOAT,
-                    PRIMARY KEY (exchange, security, currency, timestamp))""")
+        self._store.execute("""CREATE TABLE IF NOT EXISTS price (
+                exchange TEXT,
+                security TEXT,
+                currency TEXT,
+                timestamp INTEGER,
+                bid FLOAT,
+                offer FLOAT,
+                PRIMARY KEY (exchange, security, currency, timestamp))""")
+
         return
 
 
