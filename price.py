@@ -76,12 +76,12 @@ class Store():
         c = self._store.cursor()
 
         c.execute("""CREATE TABLE IF NOT EXISTS price (
-                exchange TEXT,
-                security TEXT,
-                currency TEXT,
-                timestamp INTEGER,
-                bid FLOAT,
-                offer FLOAT,
+                exchange TEXT NOT NULL,
+                security TEXT NOT NULL,
+                currency TEXT NOT NULL,
+                timestamp INTEGER NOT NULL,
+                bid FLOAT NOT NULL,
+                offer FLOAT NOT NULL,
                 PRIMARY KEY (exchange, security, currency, timestamp))""")
 
         return
