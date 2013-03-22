@@ -16,7 +16,7 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 from time import time
-import sqlite3 
+import sqlite3
 
 class Price():
     '''
@@ -33,7 +33,7 @@ class Price():
         timestamp   -- Date/time the price was retrieved/accurate
     '''
 
-    def __init__(self, exchange, security, currency, bid, offer, data=None, timestamp=time()):
+    def __init__(self, exchange, security, currency, bid, offer, data={}, timestamp=time()):
         if not exchange \
                 or not security \
                 or not currency \
@@ -84,6 +84,15 @@ class Store():
                 offer FLOAT NOT NULL,
                 PRIMARY KEY (exchange, security, currency, timestamp))""")
 
+        c.execute("""CREATE TABLE IF NOT EXISTS price_data (
+                exchange TEXT NOT NULL,
+                security TEXT NOT NULL,
+                currency TEXT NOT NULL,
+                timestamp INTEGER NOT NULL,
+                name TEXT NOT NULL,
+                value TEXT NOT NULL,
+                PRIMARY KEY (exchange, security, currency, timestamp, name),
+                FOREIGN KEY (exchange, security, currency, timestamp) REFERENCES price(exchange, security, currency, timestamp))""")
         return
 
 
@@ -96,6 +105,11 @@ class Store():
         c.execute("""INSERT INTO price (exchange, security, currency, timestamp, bid, offer)
                 VALUES (?, ?, ?, ?, ?, ?)""",
                 (p.exchange, p.security, p.currency, int(p.timestamp), p.bid, p.offer))
+
+        for n in p.data:
+            c.execute("""INSERT INTO price_data (exchange, security, currency, timestamp, name, value)
+                    VALUES (?, ?, ?, ?, ?, ?)""",
+                    (p.exchange, p.security, p.currency, int(p.timestamp), str(n), str(p.data[n])))
 
         self._store.commit()
 
@@ -117,7 +131,7 @@ class Store():
 
         r = []
         for row in c:
-            r.append(Price(row[0], row[1], row[2], row[4], row[5], None, row[3]))
+            r.append(Price(row[0], row[1], row[2], row[4], row[5], {}, row[3]))
 
         return r
 
