@@ -155,6 +155,7 @@ def main():
     if args.save:
         store = price.Store(args.save)
         store.save(mon.price)
+        store.close()
 
     if not args.quiet:
         mon.price.printstate()
