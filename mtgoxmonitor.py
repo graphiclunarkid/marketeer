@@ -137,6 +137,8 @@ def main():
     parser = argparse.ArgumentParser(description='Monitor MtGox Exchange')
     parser.add_argument('-t', '--test', action='store_true',
             help='Get and display the current price twice')
+    parser.add_argument('-s', '--save',
+            help='Save the price to <SAVE>')
 
     args = parser.parse_args()
 
@@ -147,6 +149,10 @@ def main():
         sleep(mon.updatePeriod + 1)
         mon.price.printstate()
         return
+
+    if args.save:
+        store = price.Store(args.save)
+        store.save(mon.price)
 
     mon.price.printstate()
 
