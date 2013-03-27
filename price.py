@@ -17,6 +17,7 @@
 
 from time import time
 from decimal import *
+import sqlite3
 
 class Price():
     '''
@@ -33,7 +34,7 @@ class Price():
         timestamp   -- Date/time the price was retrieved/accurate
     '''
 
-    def __init__(self, exchange, security, currency, bid, offer, exponent='1', data=None, timestamp=time()):
+    def __init__(self, exchange, security, currency, bid, offer, exponent='1', data={}, timestamp=time()):
         if not exchange \
                 or not security \
                 or not currency \
@@ -43,7 +44,7 @@ class Price():
             raise TypeError('Invalid arguments')
 
         if bid >= offer:
-            raise TypeError('Bid >= offer');
+            raise TypeError('Bid >= offer')
 
         self.exchange = exchange
         self.security = security
@@ -81,3 +82,85 @@ class Price():
         print "Spread:", self.spread, self.currency
         print "Timestamp:", self.timestamp
 
+
+class Store():
+    '''
+    Class to encapsulate a store of prices
+    '''
+
+    def __init__(self, fname):
+        '''
+        Open/create a price store
+        '''
+        self._fname = fname
+        self._store = sqlite3.connect(fname)
+
+        c = self._store.cursor()
+
+        c.execute("""CREATE TABLE IF NOT EXISTS price (
+                exchange TEXT NOT NULL,
+                security TEXT NOT NULL,
+                currency TEXT NOT NULL,
+                timestamp INTEGER NOT NULL,
+                bid FLOAT NOT NULL,
+                offer FLOAT NOT NULL,
+                PRIMARY KEY (exchange, security, currency, timestamp))""")
+
+        c.execute("""CREATE TABLE IF NOT EXISTS price_data (
+                exchange TEXT NOT NULL,
+                security TEXT NOT NULL,
+                currency TEXT NOT NULL,
+                timestamp INTEGER NOT NULL,
+                name TEXT NOT NULL,
+                value TEXT NOT NULL,
+                PRIMARY KEY (exchange, security, currency, timestamp, name),
+                FOREIGN KEY (exchange, security, currency, timestamp) REFERENCES price(exchange, security, currency, timestamp))""")
+        return
+
+
+    def save(self, p):
+        '''
+        Save a price to a price store
+        '''
+        c = self._store.cursor()
+
+        c.execute("""INSERT INTO price (exchange, security, currency, timestamp, bid, offer)
+                VALUES (?, ?, ?, ?, ?, ?)""",
+                (p.exchange, p.security, p.currency, int(p.timestamp), str(p.bid), str(p.offer)))
+
+        for n in p.data:
+            c.execute("""INSERT INTO price_data (exchange, security, currency, timestamp, name, value)
+                    VALUES (?, ?, ?, ?, ?, ?)""",
+                    (p.exchange, p.security, p.currency, int(p.timestamp), str(n), str(p.data[n])))
+
+        self._store.commit()
+
+        return
+
+
+    def load(self, exchange, security, currency):
+        '''
+        Load a list of prices from a price store
+        '''
+        c = self._store.cursor()
+
+        c.execute("""SELECT exchange, security, currency, timestamp, bid, offer
+                FROM price
+                WHERE exchange = ?
+                AND security = ?
+                AND currency = ?""",
+                (exchange, security, currency));
+
+        r = []
+        for row in c:
+            r.append(Price(row[0], row[1], row[2], row[4], row[5], timestamp=row[3]))
+
+        return r
+
+
+    def close(self):
+        '''
+        Close a price store
+        '''
+        self._store.close()
+        return
