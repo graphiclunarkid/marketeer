@@ -111,9 +111,11 @@ class MonitorError(Exception):
 def main():
     parser = argparse.ArgumentParser(description='Monitor BullionVault Exchange')
     parser.add_argument('-t', '--test', action='store_true',
-            help='Get and display the current price twice')
+            help='Get and display the current price twice (ignores -q)')
     parser.add_argument('-s', '--save',
             help='Save the price to <SAVE>')
+    parser.add_argument('-q', '--quiet', action='store_true',
+            help='Do not display the price')
 
     args = parser.parse_args()
 
@@ -129,7 +131,8 @@ def main():
         store = price.Store(args.save)
         store.save(mon.price)
 
-    mon.price.printstate()
+    if not args.quiet:
+        mon.price.printstate()
 
 
 if __name__ == "__main__":
