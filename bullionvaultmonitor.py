@@ -19,8 +19,11 @@
 
 import toolbox
 import price
+
 from time import time, sleep
 from xml.dom import minidom
+import argparse
+
 
 class BullionVaultMonitor():
     '''
@@ -105,13 +108,24 @@ class MonitorError(Exception):
         return repr(self.message)
 
 
-def _test(mon):
-    mon.price.printstate()
-    sleep(mon.updatePeriod + 1)
+def main():
+    parser = argparse.ArgumentParser(description='Monitor BullionVault Exchange')
+    parser.add_argument('-t', '--test', action='store_true',
+            help='Get and display the current price twice')
+
+    args = parser.parse_args()
+
+    mon = BullionVaultMonitor()
+
+    if args.test:
+        mon.price.printstate()
+        sleep(mon.updatePeriod + 1)
+        mon.price.printstate()
+        return
+
     mon.price.printstate()
 
-def main():
-    _test(BullionVaultMonitor())
 
 if __name__ == "__main__":
     main()
+

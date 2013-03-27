@@ -23,6 +23,8 @@ import price
 from time import time, sleep
 import json
 from decimal import *
+import argparse
+
 
 class MtgoxMonitor():
     '''
@@ -131,14 +133,22 @@ class MtgoxMonitor():
     price = property(get_price)
 
 
-def _test(mon):
-    mon.price.printstate()
-    sleep(mon.updatePeriod + 1)
-    mon.price.printstate()
-
-
 def main():
-    _test(MtgoxMonitor())
+    parser = argparse.ArgumentParser(description='Monitor MtGox Exchange')
+    parser.add_argument('-t', '--test', action='store_true',
+            help='Get and display the current price twice')
+
+    args = parser.parse_args()
+
+    mon = MtgoxMonitor()
+
+    if args.test:
+        mon.price.printstate()
+        sleep(mon.updatePeriod + 1)
+        mon.price.printstate()
+        return
+
+    mon.price.printstate()
 
 
 if __name__ == "__main__":
