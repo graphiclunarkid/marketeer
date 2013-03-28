@@ -102,8 +102,8 @@ class Store():
                 security TEXT NOT NULL,
                 currency TEXT NOT NULL,
                 timestamp INTEGER NOT NULL,
-                bid FLOAT NOT NULL,
-                offer FLOAT NOT NULL,
+                bid DECIMAL(18, 6) NOT NULL,
+                offer DECIMAL(18, 6) NOT NULL,
                 PRIMARY KEY (exchange, security, currency, timestamp))""")
 
         c.execute("""CREATE TABLE IF NOT EXISTS price_data (
