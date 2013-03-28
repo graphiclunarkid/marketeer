@@ -23,6 +23,7 @@ import price
 from time import time, sleep
 from xml.dom import minidom
 import argparse
+import locale
 
 
 class BullionVaultMonitor():
@@ -109,6 +110,10 @@ class MonitorError(Exception):
 
 
 def main():
+    locale.setlocale(locale.LC_ALL, '')
+
+    cur = locale.localeconv()['int_curr_symbol'][:3] or 'GBP'
+
     parser = argparse.ArgumentParser(description='Monitor BullionVault Exchange')
     parser.add_argument('-t', '--test', action='store_true',
             help='Get and display the current price twice (ignores -q)')
@@ -116,10 +121,13 @@ def main():
             help='Save the price to <SAVE>')
     parser.add_argument('-q', '--quiet', action='store_true',
             help='Do not display the price')
+    parser.add_argument('-c', '--currency',
+            default=cur,
+            help='Currency in which to retrieve price')
 
     args = parser.parse_args()
 
-    mon = BullionVaultMonitor()
+    mon = BullionVaultMonitor(currency=args.currency)
 
     if args.test:
         mon.price.printstate()
