@@ -1,4 +1,4 @@
-# Copyright 2013 Richard King
+# Copyright (C) 2013 - see the README file for a list of authors.
 #
 # This file is part of Marketeer.
 #
@@ -23,7 +23,8 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def setUp(self):
 
-        self.updatePeriod = 10
+        self.url = 'bvdata.xml'
+        self.updatePeriod = 1
         self.validCurrencies = list( ['EUR','GBP','USD'] )
         self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
 
@@ -35,7 +36,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
             for j in self.validMarkets:
 
-                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,i,j))
+                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency=i,market=j))
 
         monitor = validMonitors.pop()
 
@@ -53,8 +54,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
     def test_monitorRefresh(self):
 
-        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,'GBP','AUXLN')
-        monitor.url = 'bvdata.xml'
+        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency='GBP',market='AUXLN')
 
         bid = monitor.price.bid
         offer = monitor.price.offer

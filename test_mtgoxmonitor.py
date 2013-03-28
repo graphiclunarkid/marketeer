@@ -1,6 +1,4 @@
-#!/usr/bin/python
-
-# Copyright 2013 Richard King
+# Copyright (C) 2013 - see the README file for a list of authors.
 #
 # This file is part of Marketeer.
 #
@@ -19,12 +17,20 @@
 
 import unittest
 import mtgoxmonitor
+from time import sleep
+from decimal import *
 
 class Test_MtgoxMonitor(unittest.TestCase):
 
+    def setUp(self):
+
+        self.url = 'mtgdata'
+        self.request = ''
+        self.updatePeriod = 1
+
     def test_monitorAttributes(self):
 
-        monitor = mtgoxmonitor.MtgoxMonitor()
+        monitor = mtgoxmonitor.MtgoxMonitor(url = self.url, request = self.request)
         self.assertIsNotNone(monitor.updatePeriod, 'Update period is not set')
         self.assertEqual(monitor.updatePeriod, 30, 'Default update period not set correctly')
 
@@ -36,4 +42,34 @@ class Test_MtgoxMonitor(unittest.TestCase):
         self.assertIsNotNone(monitor.price.bid, 'Bid is not set')
         self.assertIsNotNone(monitor.price.offer, 'Offer is not set')
         self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
+
+    def test_monitorRefresh(self):
+
+        monitor = mtgoxmonitor.MtgoxMonitor(updatePeriod = self.updatePeriod, url = self.url, request = self.request)
+
+        bid = monitor.price.bid
+        offer = monitor.price.offer
+        spread = monitor.price.spread
+        self.assertEqual(bid, Decimal('19.52550'), 'Bid price was not imported correctly')
+        self.assertEqual(offer, Decimal('19.54141'), 'Offer price was not imported correctly')
+        self.assertEqual(spread, Decimal('0.01591'), 'Spread was not calculated correctly')
+
+
+        sleep(self.updatePeriod / 2)
+        monitor.url = 'mtgdata2'
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
+        self.assertEqual(bid2, bid, 'Bid price changed before update was due')
+        self.assertEqual(offer2, offer, 'Offer price changed before update was due')
+        self.assertEqual(spread2, spread, 'Spread changed before update was due')
+
+        sleep(self.updatePeriod)
+        bid2 = monitor.price.bid
+        offer2 = monitor.price.offer
+        spread2 = monitor.price.spread
+        self.assertEqual(bid2, Decimal('19.51550'), 'Bid price changed but wasn\'t supposed to')
+        self.assertEqual(offer2, offer, 'Offer price not updated after update was due')
+        self.assertEqual(spread2, Decimal('0.02591'), 'Spread not updated after update was due')
+
 

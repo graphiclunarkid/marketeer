@@ -1,6 +1,4 @@
-#!/usr/bin/python
-
-# Copyright 2013 Richard King
+# Copyright (C) 2013 - see the README file for a list of authors
 #
 # This file is part of Marketeer.
 #
@@ -47,4 +45,14 @@ def openAnything(source):
     # treat source as string
     import StringIO
     return StringIO.StringIO(str(source))
+
+
+def printGplNoX():
+
+    print "Marketeer Copyright (C) 2013 - see the README file for a list of authors."
+    print ""
+    print "This program comes with ABSOLUTELY NO WARRANTY."
+    print "This is free software, and you are welcome to redistribute it under certain conditions."
+    print "See the LICENSE file for details."
+    print ""
 

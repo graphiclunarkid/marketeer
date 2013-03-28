@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2013 Richard King, Adam Spragg
+# Copyright (C) 2013 - see the README file for a list of authors.
 #
 # This file is part of Marketeer.
 #
@@ -19,7 +19,7 @@
 
 import toolbox
 import price
-from time import time
+from time import time, sleep
 from xml.dom import minidom
 
 class BullionVaultMonitor():
@@ -27,11 +27,14 @@ class BullionVaultMonitor():
     Class to monitor market prices at BullionVault
     '''
 
-    def __init__(self, updatePeriod=30, currency="GBP", market="AUXLN"):
+    def __init__(self, \
+                 updatePeriod=30,\
+                 url="http://live.bullionvault.com/view_market_xml.do",\
+                 currency="GBP",\
+                 market="AUXLN"):
 
-        self.url = 'http://live.bullionvault.com/view_market_xml.do'
-#        self.url = 'bvdata.xml'
         self.updatePeriod = updatePeriod
+        self.url = url
         self.currency = currency
         self.market = market
         self._data = None
@@ -74,8 +77,13 @@ class BullionVaultMonitor():
 
                         raise MonitorError('No prices were found')
 
-        self._price = price.Price('BullionVault', 'XAU', self.currency,
-                bid, offer, { 'url': self.url }, now)
+        self._price = price.Price(exchange='BullionVault',\
+                                  security='XAU',\
+                                  currency=self.currency,\
+                                  bid=bid,\
+                                  offer=offer,\
+                                  data={ 'url': self.url },\
+                                  timestamp=now)
 
     def get_price(self):
 
@@ -96,3 +104,14 @@ class MonitorError(Exception):
 
         return repr(self.message)
 
+
+def _test(mon):
+    mon.price.printstate()
+    sleep(mon.updatePeriod + 1)
+    mon.price.printstate()
+
+def main():
+    _test(BullionVaultMonitor())
+
+if __name__ == "__main__":
+    main()

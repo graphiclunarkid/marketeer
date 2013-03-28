@@ -35,7 +35,7 @@ class Test_Price(unittest.TestCase):
     def test_store(self):
         # Supply integer timestamp, as it gets rounded in the database, and
         # we want to check for equality later
-        p = price.Price('dummy', 'dummy', 'GBP', 100, 150, { 'name': 'value' }, timestamp = int(time()))
+        p = price.Price('dummy', 'dummy', 'GBP', 100, 150, data={ 'name': 'value' }, timestamp=int(time()))
 
         s = price.Store('test_price.sqlite')
         s.save(p)

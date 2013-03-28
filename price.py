@@ -17,6 +17,7 @@
 
 from time import time
 import sqlite3
+from decimal import *
 
 class Price():
     '''
@@ -33,7 +34,7 @@ class Price():
         timestamp   -- Date/time the price was retrieved/accurate
     '''
 
-    def __init__(self, exchange, security, currency, bid, offer, data={}, timestamp=time()):
+    def __init__(self, exchange, security, currency, bid, offer, exponent='1', data={}, timestamp=time()):
         if not exchange \
                 or not security \
                 or not currency \
@@ -48,17 +49,38 @@ class Price():
         self.exchange = exchange
         self.security = security
         self.currency = currency
-        self.bid = bid
-        self.offer = offer
+        self._bid = Decimal(bid)
+        self._offer = Decimal(offer)
+        self.exponent = Decimal(exponent)
         self.data = data
         self.timestamp = timestamp
 
+    def get_bid(self):
+
+        return (self._bid * self.exponent)
+
+    bid = property(get_bid)
+
+    def get_offer(self):
+
+        return (self._offer * self.exponent)
+
+    offer = property(get_offer)
 
     def get_spread(self):
 
         return (self.offer - self.bid)
 
     spread = property(get_spread)
+
+    def printstate(self):
+
+        print "Exchange:", self.exchange
+        print "Security:", self.security
+        print "Bid:", self.bid, self.currency
+        print "Offer:", self.offer, self.currency
+        print "Spread:", self.spread, self.currency
+        print "Timestamp:", self.timestamp
 
 
 class Store():
@@ -104,7 +126,7 @@ class Store():
 
         c.execute("""INSERT INTO price (exchange, security, currency, timestamp, bid, offer)
                 VALUES (?, ?, ?, ?, ?, ?)""",
-                (p.exchange, p.security, p.currency, int(p.timestamp), p.bid, p.offer))
+                (p.exchange, p.security, p.currency, int(p.timestamp), str(p.bid), str(p.offer)))
 
         for n in p.data:
             c.execute("""INSERT INTO price_data (exchange, security, currency, timestamp, name, value)
@@ -131,7 +153,7 @@ class Store():
 
         r = []
         for row in c:
-            r.append(Price(row[0], row[1], row[2], row[4], row[5], {}, row[3]))
+            r.append(Price(row[0], row[1], row[2], row[4], row[5], timestamp=row[3]))
 
         return r
 
