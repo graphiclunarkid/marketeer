@@ -23,6 +23,9 @@ import price
 from time import time, sleep
 import json
 from decimal import *
+import argparse
+import locale
+
 
 class MtgoxMonitor():
     '''
@@ -131,14 +134,39 @@ class MtgoxMonitor():
     price = property(get_price)
 
 
-def _test(mon):
-    mon.price.printstate()
-    sleep(mon.updatePeriod + 1)
-    mon.price.printstate()
-
-
 def main():
-    _test(MtgoxMonitor())
+    locale.setlocale(locale.LC_ALL, '')
+
+    cur = locale.localeconv()['int_curr_symbol'][:3] or 'GBP'
+
+    parser = argparse.ArgumentParser(description='Monitor MtGox Exchange')
+    parser.add_argument('-t', '--test', action='store_true',
+            help='Get and display the current price twice (ignores -q)')
+    parser.add_argument('-s', '--save',
+            help='Save the price to <SAVE>')
+    parser.add_argument('-q', '--quiet', action='store_true',
+            help='Do not display the price')
+    parser.add_argument('-c', '--currency',
+            default=cur,
+            help='Currency in which to retrieve price')
+
+    args = parser.parse_args()
+
+    mon = MtgoxMonitor(currency=args.currency)
+
+    if args.test:
+        mon.price.printstate()
+        sleep(mon.updatePeriod + 1)
+        mon.price.printstate()
+        return
+
+    if args.save:
+        store = price.Store(args.save)
+        store.save(mon.price)
+        store.close()
+
+    if not args.quiet:
+        mon.price.printstate()
 
 
 if __name__ == "__main__":
