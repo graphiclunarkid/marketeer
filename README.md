@@ -1,29 +1,29 @@
-MARKETEER v0.1.1
+MARKETEER v0.1.2
 ----------------
 A trading-bot project written in python.
 
 SUPPORTED MARKETS
 -----------------
 Monitoring only: Bullion Vault (http://www.bullionvault.com/)
-Monitoring only: MtGox (https://mtgox.com/)
 
 BACKLOG
 -------
-https://trello.com/board/marketeer/50369a0c3a5753ff20071050
+[![Stories in Ready](https://badge.waffle.io/graphiclunarkid/marketeer.png?label=ready)](http://waffle.io/graphiclunarkid/marketeer)
+[![Build Status](https://travis-ci.org/graphiclunarkid/marketeer.svg?branch=master)](https://travis-ci.org/graphiclunarkid/marketeer)
 
 USAGE
 -----
 Run bullionvaultmonitor.py to see live data from the Bullion Vault London Gold
 GBP market.
 
-Run mtgoxmonitor.py to see live data from the MtGox BTC/GBP market.
+The script calls the Bullionvault public API twice, waiting 30s between each
+call, and displays the current bid price, offer price, and spread each time.
 
-The scripts call their respective public APIs twice, waiting 30s between each
-call, and display the current bid price, offer price, and spread each time.
+Code for storing price history over time is in development.
 
 COPYRIGHT
 ---------
-Copyright (C) 2013 Richard King, Adam Spragg
+Copyright (C) 2013, 2014 Richard King and Adam Spragg
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -42,8 +42,3 @@ The openAnything function was derived from the Dive Into Python book
 2004 Mark Pilgrim (josh@servercobra.com). It is included here under the terms
 of the Python license (http://www.diveintopython.net/appendix/license.html)
 
-CONTACT
--------
-Richard King <mail@richardskingdom.net>
-
-[![Stories in Ready](https://badge.waffle.io/graphiclunarkid/marketeer.png?label=ready)](http://waffle.io/graphiclunarkid/marketeer) 
