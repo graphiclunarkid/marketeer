@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2013 Richard King, Adam Spragg
+# Copyright (C) 2013 - see the README file for a list of authors.
 #
 # This file is part of Marketeer.
 #
@@ -18,19 +18,27 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 import toolbox
-from time import time
+import price
+
+from time import time, sleep
 from xml.dom import minidom
+import argparse
+import locale
+
 
 class BullionVaultMonitor():
     '''
     Class to monitor market prices at BullionVault
     '''
 
-    def __init__(self, updatePeriod=30, currency="GBP", market="AUXLN"):
+    def __init__(self, \
+                 updatePeriod=30,\
+                 url="http://live.bullionvault.com/view_market_xml.do",\
+                 currency="GBP",\
+                 market="AUXLN"):
 
-        self.url = 'http://live.bullionvault.com/view_market_xml.do'
-#        self.url = 'bvdata.xml'
         self.updatePeriod = updatePeriod
+        self.url = url
         self.currency = currency
         self.market = market
         self._data = None
@@ -44,53 +52,49 @@ class BullionVaultMonitor():
         Also assumes one buy and one sell price per pitch!
         '''
 
-        if ((time() - self._timestamp) > self.updatePeriod) or self._data == None:
+        now = time()
+
+        if ((now - self._timestamp) > self.updatePeriod) or self._data == None:
 
             sock = toolbox.openAnything(self.url)
             xmldoc = minidom.parse(sock).documentElement
             sock.close()
             self._data = xmldoc
-            self._timestamp = time()
+            self._timestamp = now
 
         for pitch in self._data.getElementsByTagName('pitch'):
 
             if pitch.getAttribute('securityId') == self.market and \
                 pitch.getAttribute('considerationCurrency') == self.currency:
 
-                for price in pitch.getElementsByTagName('price'):
+                for p in pitch.getElementsByTagName('price'):
 
-                    if price.getAttribute('actionIndicator') == 'B':
+                    if p.getAttribute('actionIndicator') == 'B':
 
-                        self._bid = int(price.getAttribute('limit'))
+                        bid = int(p.getAttribute('limit'))
 
-                    elif price.getAttribute('actionIndicator') == 'S':
+                    elif p.getAttribute('actionIndicator') == 'S':
 
-                        self._offer = int(price.getAttribute('limit'))
+                        offer = int(p.getAttribute('limit'))
 
                     else:
 
                         raise MonitorError('No prices were found')
 
-    def get_offer(self):
+        self._price = price.Price(exchange='BullionVault',\
+                                  security='XAU',\
+                                  currency=self.currency,\
+                                  bid=bid,\
+                                  offer=offer,\
+                                  data={ 'url': self.url },\
+                                  timestamp=now)
+
+    def get_price(self):
 
         self._update()
-        return self._offer
+        return self._price
 
-    offer = property(get_offer)
-
-    def get_bid(self):
-
-        self._update()
-        return self._bid
-
-    bid = property(get_bid)
-
-    def get_spread(self):
-
-        self._update()
-        return (self._offer - self._bid)
-
-    spread = property(get_spread)
+    price = property(get_price)
 
 
 class MonitorError(Exception):
@@ -103,4 +107,43 @@ class MonitorError(Exception):
     def __str__(self):
 
         return repr(self.message)
+
+
+def main():
+    locale.setlocale(locale.LC_ALL, '')
+
+    cur = locale.localeconv()['int_curr_symbol'][:3] or 'GBP'
+
+    parser = argparse.ArgumentParser(description='Monitor BullionVault Exchange')
+    parser.add_argument('-t', '--test', action='store_true',
+            help='Get and display the current price twice (ignores -q)')
+    parser.add_argument('-s', '--save',
+            help='Save the price to <SAVE>')
+    parser.add_argument('-q', '--quiet', action='store_true',
+            help='Do not display the price')
+    parser.add_argument('-c', '--currency',
+            default=cur,
+            help='Currency in which to retrieve price')
+
+    args = parser.parse_args()
+
+    mon = BullionVaultMonitor(currency=args.currency)
+
+    if args.test:
+        mon.price.printstate()
+        sleep(mon.updatePeriod + 1)
+        mon.price.printstate()
+        return
+
+    if args.save:
+        store = price.Store(args.save)
+        store.save(mon.price)
+        store.close()
+
+    if not args.quiet:
+        mon.price.printstate()
+
+
+if __name__ == "__main__":
+    main()
 
