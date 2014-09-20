@@ -22,7 +22,7 @@ call, and displays the current bid price, offer price, and spread each time.
 It can optionally save the price results to an sqlite database.
 
 ```
-usage: bullionvaultmonitor.py [-h] [-t] [-s SAVE] [-q] [-c CURRENCY]
+usage: python3 marketeer.bullionvaultmonitor.py [-h] [-t] [-s SAVE] [-q] [-c CURRENCY]
 
 Monitor BullionVault Exchange
 
