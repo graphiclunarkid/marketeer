@@ -30,10 +30,10 @@ def openAnything(source):
         return sys.stdin
 
     # try to open with urllib (if source is http, ftp, or file URL)
-    import urllib
+    import urllib.request, urllib.parse, urllib.error
     try:
-        return urllib.urlopen(source)
-    except (IOError, OSError):
+        return urllib.request.urlopen(source)
+    except (ValueError, IOError, OSError):
         pass
 
     # try to open with native open function (if source is pathname)
@@ -43,16 +43,16 @@ def openAnything(source):
         pass
 
     # treat source as string
-    import StringIO
-    return StringIO.StringIO(str(source))
+    import io
+    return io.StringIO(str(source))
 
 
 def printGplNoX():
 
-    print "Marketeer Copyright (C) 2013 - see the README file for a list of authors."
-    print ""
-    print "This program comes with ABSOLUTELY NO WARRANTY."
-    print "This is free software, and you are welcome to redistribute it under certain conditions."
-    print "See the LICENSE file for details."
-    print ""
+    print("Marketeer Copyright (C) 2013 - see the README file for a list of authors.")
+    print("")
+    print("This program comes with ABSOLUTELY NO WARRANTY.")
+    print("This is free software, and you are welcome to redistribute it under certain conditions.")
+    print("See the LICENSE file for details.")
+    print("")
 

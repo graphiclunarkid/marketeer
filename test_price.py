@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # This file is part of Marketeer.
 #
 # Marketeer is free software: you can redistribute it and/or modify

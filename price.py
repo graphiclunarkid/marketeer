@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # This file is part of Marketeer.
 #
@@ -75,12 +75,12 @@ class Price():
 
     def printstate(self):
 
-        print "Exchange:", self.exchange
-        print "Security:", self.security
-        print "Bid:", self.bid, self.currency
-        print "Offer:", self.offer, self.currency
-        print "Spread:", self.spread, self.currency
-        print "Timestamp:", self.timestamp
+        print("Exchange:", self.exchange)
+        print("Security:", self.security)
+        print("Bid:", self.bid, self.currency)
+        print("Offer:", self.offer, self.currency)
+        print("Spread:", self.spread, self.currency)
+        print("Timestamp:", self.timestamp)
 
 
 class Store():
