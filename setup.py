@@ -1,4 +1,4 @@
-from distutils.core import setup
+from distutils.core import setup, Command
 
 classifiers = []
 classifiers.append('Development Status :: 2 - Pre-Alpha')
@@ -15,6 +15,19 @@ classifiers.append('Topic :: Office/Business :: Financial')
 classifiers.append('Topic :: Office/Business :: Financial :: Investment')
 classifiers.append('Topic :: Scientific/Engineering :: Information Analysis')
 
+class PyTest(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import sys,subprocess
+        errno = subprocess.call([sys.executable, 'runtests.py'])
+        raise SystemExit(errno)
+
 setup(
     name = 'marketeer',
     version = '0.1.2',
@@ -25,4 +38,5 @@ setup(
     description = 'Trading bot',
     long_description = '',
     classifiers = classifiers,
-)
+    cmdclass = {'test': PyTest},
+    )
