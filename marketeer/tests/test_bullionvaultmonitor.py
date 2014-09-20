@@ -18,8 +18,10 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import bullionvaultmonitor
 from time import sleep
+
+from .. import bullionvaultmonitor
+
 
 class Test_BullionVaultMonitor(unittest.TestCase):
 

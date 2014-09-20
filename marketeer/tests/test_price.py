@@ -16,9 +16,11 @@
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import price
 import os
 from time import time
+
+from .. import price
+
 
 class Test_Price(unittest.TestCase):
 
