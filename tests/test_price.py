@@ -19,7 +19,7 @@ import unittest
 import os
 from time import time
 
-from .. import price
+from marketeer import price
 
 
 class Test_Price(unittest.TestCase):
