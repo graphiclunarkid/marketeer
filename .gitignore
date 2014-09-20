@@ -2,3 +2,5 @@
 .autonose-depends.pickle
 .swp
 *~
+marketeer.egg-info
+dist

@@ -17,15 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
-import bullionvaultmonitor
+import unittest, os
 from time import sleep
+
+from marketeer import bullionvaultmonitor
+
 
 class Test_BullionVaultMonitor(unittest.TestCase):
 
     def setUp(self):
 
-        self.url = 'bvdata.xml'
+        self.here = os.path.abspath(os.path.dirname(__file__))
+        self.url = self.here + '/bvdata.xml'
         self.updatePeriod = 1
         self.validCurrencies = list( ['EUR','GBP','USD'] )
         self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
@@ -66,7 +69,7 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         self.assertEqual(spread, 40, 'Spread was not calculated imported correctly')
 
         sleep(self.updatePeriod / 2)
-        monitor.url = 'bvdata2.xml'
+        monitor.url = self.here + '/bvdata2.xml'
         bid2 = monitor.price.bid
         offer2 = monitor.price.offer
         spread2 = monitor.price.spread

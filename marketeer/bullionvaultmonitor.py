@@ -17,13 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Marketeer.  If not, see <http://www.gnu.org/licenses/>.
 
-import toolbox
-import price
-
 from time import time, sleep
 from xml.dom import minidom
 import argparse
 import locale
+
+from marketeer import toolbox, price
 
 
 class BullionVaultMonitor():
