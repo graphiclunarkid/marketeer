@@ -22,8 +22,7 @@ from xml.dom import minidom
 import argparse
 import locale
 
-import toolbox
-import price
+from marketeer import toolbox, price
 
 
 class BullionVaultMonitor():
