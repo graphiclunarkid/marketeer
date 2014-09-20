@@ -1,6 +1,10 @@
-*.pyc
-.autonose-depends.pickle
+# vim temp and swap files
 .swp
 *~
-marketeer.egg-info
-dist
+
+# Virtualenv
+.Python
+bin
+lib
+include
+
