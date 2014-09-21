@@ -2,9 +2,6 @@
 marketeer
 ===============================
 
-.. image:: https://badge.fury.io/py/marketeer.png
-    :target: http://badge.fury.io/py/marketeer
-
 .. image:: https://badge.waffle.io/graphiclunarkid/marketeer.png?label=ready
     :target: http://waffle.io/graphiclunarkid/marketeer
 
@@ -23,6 +20,7 @@ Features
 * Documentation: https://marketeer.readthedocs.org
 
 ::
+
     Usage: python3 marketeer.bullionvaultmonitor.py [-h] [-t] [-s SAVE] [-q] [-c CURRENCY]
 
     Monitor BullionVault Exchange
