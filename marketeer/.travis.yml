@@ -3,14 +3,27 @@
 language: python
 
 python:
-  - "3.4"
-  - "3.3"
-  - "2.7"
-  - "2.6"
-  - "pypy"
+    - "3.4"
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements.txt
+install:
+    - pip install -r requirements.txt --use-mirrors
+    - pip install -r t_requirements.txt --use-mirrors
+    - pip install coverage
+    - pip install coveralls
 
 # command to run tests, e.g. python setup.py test
-script: python setup.py test
+script: "coverage run --source=marketeer setup.py test"
+
+after_success:
+    coveralls
+
+branches:
+    except:
+        - gh-pages
+
+env:
+  - TOXENV=py34
+  - TOXENV=py33
+  - TOXENV=py32
+
