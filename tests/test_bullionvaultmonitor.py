@@ -26,7 +26,8 @@ Tests for `bullionvaultmonitor` module.
 """
 
 
-import unittest, os
+import unittest
+import os
 from time import sleep
 
 from marketeer import bullionvaultmonitor
@@ -39,8 +40,8 @@ class Test_BullionVaultMonitor(unittest.TestCase):
         self.here = os.path.abspath(os.path.dirname(__file__))
         self.url = self.here + '/bvdata.xml'
         self.updatePeriod = 1
-        self.validCurrencies = list( ['EUR','GBP','USD'] )
-        self.validMarkets = list( ['AUXLN','AUXNY','AUXZU'] )
+        self.validCurrencies = list(['EUR', 'GBP', 'USD'])
+        self.validMarkets = list(['AUXLN', 'AUXNY', 'AUXZU'])
 
     def test_monitorAttributes(self):
 
@@ -50,48 +51,72 @@ class Test_BullionVaultMonitor(unittest.TestCase):
 
             for j in self.validMarkets:
 
-                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency=i,market=j))
+                validMonitors.add(bullionvaultmonitor.BullionVaultMonitor(
+                    self.updatePeriod,
+                    url=self.url,
+                    currency=i,
+                    market=j))
 
         monitor = validMonitors.pop()
 
         while (len(validMonitors) > 0):
 
-            self.assertEqual(monitor.price.exchange, 'BullionVault', 'Wrong exchange')
-            self.assertEqual(monitor.price.security, 'XAU', 'Wrong security')
-            self.assertIsNotNone(monitor.price.spread, 'Spread wasn\'t calculated')
-            self.assertGreaterEqual(monitor.price.spread, 0, 'Spread is negative')
-            self.assertIsNotNone(monitor.price.bid, 'Bid price is not set')
-            self.assertIsNotNone(monitor.price.offer, 'Offer price is not set')
-            self.assertIsNotNone(monitor.price.timestamp, 'Timestamp not set')
-            monitor = validMonitors.pop()
+            self.assertEqual(monitor.price.exchange, 'BullionVault',
+                             'Wrong exchange')
+            self.assertEqual(monitor.price.security, 'XAU',
+                             'Wrong security')
+            self.assertIsNotNone(monitor.price.spread,
+                                 'Spread wasn\'t calculated')
+            self.assertGreaterEqual(monitor.price.spread, 0,
+                                    'Spread is negative')
+            self.assertIsNotNone(monitor.price.bid,
+                                 'Bid price is not set')
+            self.assertIsNotNone(monitor.price.offer,
+                                 'Offer price is not set')
+            self.assertIsNotNone(monitor.price.timestamp,
+                                 'Timestamp not set')
 
+            monitor = validMonitors.pop()
 
     def test_monitorRefresh(self):
 
-        monitor = bullionvaultmonitor.BullionVaultMonitor(self.updatePeriod,url = self.url,currency='GBP',market='AUXLN')
+        monitor = bullionvaultmonitor.BullionVaultMonitor(
+            self.updatePeriod,
+            url=self.url,
+            currency='GBP',
+            market='AUXLN')
 
         bid = monitor.price.bid
         offer = monitor.price.offer
         spread = monitor.price.spread
-        self.assertEqual(bid, 33910, 'Bid price was not imported correctly')
-        self.assertEqual(offer, 33950, 'Offer price was not imported correctly')
-        self.assertEqual(spread, 40, 'Spread was not calculated imported correctly')
+
+        self.assertEqual(bid, 33910,
+                         'Bid price was not imported correctly')
+        self.assertEqual(offer, 33950,
+                         'Offer price was not imported correctly')
+        self.assertEqual(spread, 40,
+                         'Spread was not calculated imported correctly')
 
         sleep(self.updatePeriod / 2)
         monitor.url = self.here + '/bvdata2.xml'
         bid2 = monitor.price.bid
         offer2 = monitor.price.offer
         spread2 = monitor.price.spread
-        self.assertEqual(bid2, bid, 'Bid price changed before update was due')
-        self.assertEqual(offer2, offer, 'Offer price changed before update was due')
-        self.assertEqual(spread2, spread, 'Spread changed before update was due')
+        self.assertEqual(bid2, bid,
+                         'Bid price changed before update was due')
+        self.assertEqual(offer2, offer,
+                         'Offer price changed before update was due')
+        self.assertEqual(spread2, spread,
+                         'Spread changed before update was due')
 
         sleep(self.updatePeriod)
         bid2 = monitor.price.bid
         offer2 = monitor.price.offer
         spread2 = monitor.price.spread
-        self.assertEqual(bid2, 33920, 'Bid price not updated after update was due')
-        self.assertEqual(offer2, offer, 'Offer price changed but wasn\'t supposed to')
-        self.assertEqual(spread2, 30, 'Spread not updated after update was due')
 
-
+        self.assertEqual(bid2, 33920,
+                         'Bid price not updated after update was due')
+        self.assertEqual(offer2, offer,
+                         'Offer price changed but wasn\'t supposed to')
+        self.assertEqual(spread2, 30,
+                         'Spread not updated after update was due')

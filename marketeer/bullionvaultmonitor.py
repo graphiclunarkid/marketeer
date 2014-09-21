@@ -31,10 +31,10 @@ class BullionVaultMonitor():
     Class to monitor market prices at BullionVault
     '''
 
-    def __init__(self, \
-                 updatePeriod=30,\
-                 url="http://live.bullionvault.com/view_market_xml.do",\
-                 currency="GBP",\
+    def __init__(self,
+                 updatePeriod=30,
+                 url="http://live.bullionvault.com/view_market_xml.do",
+                 currency="GBP",
                  market="AUXLN"):
 
         self.updatePeriod = updatePeriod
@@ -46,7 +46,8 @@ class BullionVaultMonitor():
 
     def _update(self):
         '''
-        Function extract prices in the selected currency, from the selected market, into variables
+        Function extract prices in the selected currency, from the selected
+        market, into variables.
 
         Assumes one pitch per market/currency combination in the file.
         Also assumes one buy and one sell price per pitch!
@@ -54,7 +55,7 @@ class BullionVaultMonitor():
 
         now = time()
 
-        if ((now - self._timestamp) > self.updatePeriod) or self._data == None:
+        if ((now - self._timestamp) > self.updatePeriod) or self._data is None:
 
             sock = toolbox.openAnything(self.url)
             xmldoc = minidom.parse(sock).documentElement
@@ -64,8 +65,8 @@ class BullionVaultMonitor():
 
         for pitch in self._data.getElementsByTagName('pitch'):
 
-            if pitch.getAttribute('securityId') == self.market and \
-                pitch.getAttribute('considerationCurrency') == self.currency:
+            if (pitch.getAttribute('securityId') == self.market and
+               pitch.getAttribute('considerationCurrency') == self.currency):
 
                 for p in pitch.getElementsByTagName('price'):
 
@@ -81,12 +82,12 @@ class BullionVaultMonitor():
 
                         raise MonitorError('No prices were found')
 
-        self._price = price.Price(exchange='BullionVault',\
-                                  security='XAU',\
-                                  currency=self.currency,\
-                                  bid=bid,\
-                                  offer=offer,\
-                                  data={ 'url': self.url },\
+        self._price = price.Price(exchange='BullionVault',
+                                  security='XAU',
+                                  currency=self.currency,
+                                  bid=bid,
+                                  offer=offer,
+                                  data={'url': self.url},
                                   timestamp=now)
 
     def get_price(self):
@@ -114,16 +115,18 @@ def main():
 
     cur = locale.localeconv()['int_curr_symbol'][:3] or 'GBP'
 
-    parser = argparse.ArgumentParser(description='Monitor BullionVault Exchange')
+    parser = argparse.ArgumentParser(
+        description='Monitor BullionVault Exchange')
+
     parser.add_argument('-t', '--test', action='store_true',
-            help='Get and display the current price twice (ignores -q)')
+                        help='Get and display the current price twice \
+                        (ignores -q)')
     parser.add_argument('-s', '--save',
-            help='Save the price to <SAVE>')
+                        help='Save the price to <SAVE>')
     parser.add_argument('-q', '--quiet', action='store_true',
-            help='Do not display the price')
-    parser.add_argument('-c', '--currency',
-            default=cur,
-            help='Currency in which to retrieve price')
+                        help='Do not display the price')
+    parser.add_argument('-c', '--currency', default=cur,
+                        help='Currency in which to retrieve price')
 
     args = parser.parse_args()
 
@@ -146,4 +149,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

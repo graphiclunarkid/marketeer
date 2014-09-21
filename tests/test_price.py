@@ -41,21 +41,25 @@ class Test_Price(unittest.TestCase):
         self.assertEqual(p.offer, 150, 'Wrong offer')
         self.assertEqual(p.spread, 50, 'Wrong spread')
 
-        self.assertRaises(TypeError, price.Price, 'dummy', 'dummy', 'GBP', 0, 150)
-        self.assertRaises(TypeError, price.Price, 'dummy', 'dummy', 'GBP', 150, 100)
-
+        self.assertRaises(TypeError, price.Price,
+                          'dummy', 'dummy', 'GBP', 0, 150)
+        self.assertRaises(TypeError, price.Price,
+                          'dummy', 'dummy', 'GBP', 150, 100)
 
     def test_store(self):
         # Supply integer timestamp, as it gets rounded in the database, and
         # we want to check for equality later
-        p = price.Price('dummy', 'dummy', 'GBP', 100, 150, data={ 'name': 'value' }, timestamp=int(time()))
+        p = price.Price('dummy', 'dummy', 'GBP', 100, 150,
+                        data={'name': 'value'},
+                        timestamp=int(time()))
 
         s = price.Store('test_price.sqlite')
         s.save(p)
 
         # Load data we've just saved
         all = s.load('dummy', 'dummy', 'GBP')
-        self.assertEqual(len(all), 1, 'Incorrect number of rows returned')
+        self.assertEqual(len(all), 1,
+                         'Incorrect number of rows returned')
 
         p2 = all[0]
         self.assertEqual(p.exchange, p2.exchange)
@@ -71,7 +75,8 @@ class Test_Price(unittest.TestCase):
         s = price.Store('test_price.sqlite')
 
         all = s.load('dummy', 'dummy', 'GBP')
-        self.assertEqual(len(all), 1, 'Incorrect number of rows returned')
+        self.assertEqual(len(all), 1,
+                         'Incorrect number of rows returned')
 
         p2 = all[0]
         self.assertEqual(p.exchange, p2.exchange)
@@ -82,7 +87,6 @@ class Test_Price(unittest.TestCase):
         self.assertEqual(p.timestamp, p2.timestamp)
 
         s.close()
-
 
     def tearDown(self):
         try:

@@ -22,6 +22,7 @@
 # 2004 Mark Pilgrim (josh@servercobra.com). It is included here under the terms
 # of the Python license (http://www.diveintopython.net/appendix/license.html)
 
+
 def openAnything(source):
 
     if hasattr(source, "read"):
@@ -32,7 +33,9 @@ def openAnything(source):
         return sys.stdin
 
     # try to open with urllib (if source is http, ftp, or file URL)
-    import urllib.request, urllib.parse, urllib.error
+    import urllib.request
+    import urllib.parse
+    import urllib.error
     try:
         return urllib.request.urlopen(source)
     except (ValueError, IOError, OSError):
@@ -51,10 +54,11 @@ def openAnything(source):
 
 def printGplNoX():
 
-    print("Marketeer Copyright (C) 2013 - see the README file for a list of authors.")
+    print("Marketeer Copyright (C) 2013, 2014")
+    print("See the README file for a list of authors.")
     print("")
     print("This program comes with ABSOLUTELY NO WARRANTY.")
-    print("This is free software, and you are welcome to redistribute it under certain conditions.")
+    print("This is free software, and you are welcome to redistribute it \
+          under certain conditions.")
     print("See the LICENSE file for details.")
     print("")
-

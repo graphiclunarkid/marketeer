@@ -30,6 +30,7 @@ clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+	rm -fr .cache/
 
 lint:
 	flake8 marketeer tests

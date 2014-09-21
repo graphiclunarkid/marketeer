@@ -27,7 +27,8 @@ requirements = [
 test_requirements = [
     'pytest',
     'pytest-cov',
-    'tox'
+    'pytest-pep8',
+    'tox',
 ]
 
 setup(
