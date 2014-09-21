@@ -6,13 +6,16 @@ from setuptools import setup
 from setuptools.command.test import test as TestCommand
 import sys
 
+
 class Tox(TestCommand):
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
         self.test_suite = True
+
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, because outside the eggs aren't loaded
         import tox
         errcode = tox.cmdline(self.test_args)
         sys.exit(errcode)
@@ -20,16 +23,14 @@ class Tox(TestCommand):
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = [
-    # TODO: put package requirements here
-]
+requirements = []
 
 test_requirements = [
     'pytest',
     'pytest-cov',
     'pytest-pep8',
     'tox',
-]
+    ]
 
 setup(
     name='marketeer',
@@ -56,7 +57,8 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'License :: OSI Approved :: \
+            GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -69,5 +71,5 @@ setup(
     ],
     test_suite='tests',
     tests_require=test_requirements,
-    cmdclass = {'test': Tox},
+    cmdclass={'test': Tox},
 )
