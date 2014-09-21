@@ -8,9 +8,6 @@ marketeer
 .. image:: https://travis-ci.org/graphiclunarkid/marketeer.png?branch=master
     :target: https://travis-ci.org/graphiclunarkid/marketeer
 
-.. image:: https://pypip.in/d/marketeer/badge.png
-    :target: https://pypi.python.org/pypi/marketeer
-
 A trading-bot project written in python.
 
 Features
