@@ -11,7 +11,6 @@ python: 3.4
 env:
     - TOXENV=py34
     - TOXENV=py33
-    - TOXENV=pep8
 
 install:
     - pip install tox
