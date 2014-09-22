@@ -1,5 +1,5 @@
 ===============================
-marketeer
+Marketeer
 ===============================
 
 .. image:: https://badge.waffle.io/graphiclunarkid/marketeer.png?label=ready
@@ -9,8 +9,8 @@ marketeer
     :target: https://travis-ci.org/graphiclunarkid/marketeer
 
 .. image:: https://coveralls.io/repos/graphiclunarkid/marketeer/badge.png?branch=master
-    :target: https://coveralls.io/r/graphiclunarkid/marketeer
- 
+    :target: https://coveralls.io/r/graphiclunarkid/marketeer?branch=master
+
 A trading-bot project written in python.
 
 Features
