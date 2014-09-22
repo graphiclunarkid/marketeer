@@ -8,6 +8,9 @@ marketeer
 .. image:: https://travis-ci.org/graphiclunarkid/marketeer.png?branch=master
     :target: https://travis-ci.org/graphiclunarkid/marketeer
 
+.. image:: https://coveralls.io/repos/graphiclunarkid/marketeer/badge.png?branch=master
+    :target: https://coveralls.io/r/graphiclunarkid/marketeer
+ 
 A trading-bot project written in python.
 
 Features
