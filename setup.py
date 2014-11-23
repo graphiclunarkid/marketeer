@@ -6,6 +6,7 @@ from setuptools import setup
 from setuptools.command.test import test as TestCommand
 import sys
 
+import marketeer
 
 class Tox(TestCommand):
 
@@ -34,7 +35,7 @@ test_requirements = [
 
 setup(
     name='marketeer',
-    version='0.1.2',
+    version=marketeer.__version__,
     description='A trading bot',
     long_description=readme + '\n\n' + history,
     author='Richard King',
