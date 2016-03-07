@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Richard King <mail@richardskingdom.net>
+* Richard King <richard@richardskingdom.net>
 
 Contributors
 ------------

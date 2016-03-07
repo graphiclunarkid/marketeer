@@ -54,7 +54,7 @@ def openAnything(source):
 
 def printGplNoX():
 
-    print("Marketeer Copyright (C) 2013, 2014")
+    print("Marketeer Copyright (C) 2013, 2014, 2015, 2016")
     print("See the README file for a list of authors.")
     print("")
     print("This program comes with ABSOLUTELY NO WARRANTY.")

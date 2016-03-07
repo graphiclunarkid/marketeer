@@ -39,7 +39,7 @@ setup(
     description='A trading bot',
     long_description=readme + '\n\n' + history,
     author='Richard King',
-    author_email='mail@richardskingdom.net',
+    author_email='richard@richardskingdom.net',
     url='https://github.com/graphiclunarkid/marketeer',
     packages=[
         'marketeer',
@@ -64,7 +64,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Topic :: Office/Business :: Financial',
         'Topic :: Office/Business :: Financial :: Investment',
