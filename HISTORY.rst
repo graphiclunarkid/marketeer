@@ -3,6 +3,15 @@
 History
 -------
 
+0.1.4 (2016-03-08)
+------------------
+Blow the cobwebs off the project after a year of inactivity
+
+Doc: Add python3 environment prerequisites to contributing documentation
+Other: Remove python3.3 support since Debian stable no longer ships with it
+Other: Change my email address
+Other: Update copyright years
+
 0.1.3 (2014-11-23)
 ---------------------
 Tidy-up release, mostly to do with packaging

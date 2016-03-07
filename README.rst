@@ -33,6 +33,6 @@ Features
       -c CURRENCY, --currency CURRENCY
                             Currency in which to retrieve price
 
-Copyright (C) 2013, 2014 Richard King and contributors (see AUTHORS.rst)
+Copyright (C) 2013, 2014, 2015, 2016 Richard King and contributors (see AUTHORS.rst)
 Licensed under the GNU General Public License v3 (or later).
 See the file LICENCE for details.

@@ -57,6 +57,7 @@ Get Started!
 
 Ready to contribute? Here's how to set up `marketeer` for local development.
 
+0. You will need a working python3 development environment, including virtualenv, virtualenvwrapper, setuptools and pip. 
 1. Fork the `marketeer` repo on GitHub.
 2. Clone your fork locally::
 
@@ -66,7 +67,7 @@ Ready to contribute? Here's how to set up `marketeer` for local development.
 
     $ mkvirtualenv marketeer
     $ cd marketeer/
-    $ python setup.py develop
+    $ python3 setup.py develop
 
 4. Create a branch for local development::
 
@@ -76,9 +77,9 @@ Ready to contribute? Here's how to set up `marketeer` for local development.
 
 5. When you're done making changes, check that your changes pass PEP-8 and the tests, including testing other Python versions with tox::
 
-    $ python setup.py test
+    $ python3 setup.py test
 
-   To get py.test and tox, just pip install them into your virtualenv.
+   To get py.test and tox, just pip3 install them into your virtualenv.
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -97,9 +98,9 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.3 and 3.4. Check
+3. The pull request should work for Python 3.4. Check
    https://travis-ci.org/graphiclunarkid/marketeer/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+   and make sure that the tests pass.
 
 Tips
 ----
