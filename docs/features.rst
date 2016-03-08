@@ -1,0 +1,1 @@
+Features--------* Display live data from Bullion Vault (http://www.bullionvault.com/)* Stores market data to an sqlite3 database

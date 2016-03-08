@@ -3,20 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to marketeer's documentation!
-======================================
+Marketeer
+=========
+
+A trading-bot project written in python.
 
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   readme
+   features
    installation
    usage
    contributing
-   authors
+   credits
    history
+   licence
 
 Indices and tables
 ==================

@@ -1,0 +1,1 @@
+=======Credits=======.. include:: copyright.rst.. include:: ../AUTHORS.rst

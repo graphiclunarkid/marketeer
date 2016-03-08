@@ -2,6 +2,8 @@
 Marketeer
 ===============================
 
+A trading-bot project written in python.
+
 .. image:: https://badge.waffle.io/graphiclunarkid/marketeer.png?label=ready
     :target: http://waffle.io/graphiclunarkid/marketeer
 
@@ -11,17 +13,18 @@ Marketeer
 .. image:: https://coveralls.io/repos/graphiclunarkid/marketeer/badge.png?branch=master
     :target: https://coveralls.io/r/graphiclunarkid/marketeer?branch=master
 
-A trading-bot project written in python.
-
 Features
 --------
+
 * Display live data from Bullion Vault (http://www.bullionvault.com/)
 * Stores market data to an sqlite3 database
-* Documentation: https://marketeer.readthedocs.org
+
+Usage
+-----
 
 ::
 
-    Usage: python3 marketeer.bullionvaultmonitor.py [-h] [-t] [-s SAVE] [-q] [-c CURRENCY]
+    python3 marketeer.bullionvaultmonitor.py [-h] [-t] [-s SAVE] [-q] [-c CURRENCY]
 
     Monitor BullionVault Exchange
 
@@ -33,6 +36,12 @@ Features
       -c CURRENCY, --currency CURRENCY
                             Currency in which to retrieve price
 
+Documentation: https://marketeer.readthedocs.org
+
+Licence
+-------
 Copyright (C) 2013, 2014, 2015, 2016 Richard King and contributors (see AUTHORS.rst)
+
 Licensed under the GNU General Public License v3 (or later).
-See the file LICENCE for details.
+
+See the file LICENCE.rst for details.

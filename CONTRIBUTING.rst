@@ -57,7 +57,7 @@ Get Started!
 
 Ready to contribute? Here's how to set up `marketeer` for local development.
 
-0. You will need a working python3 development environment, including virtualenv, virtualenvwrapper, setuptools and pip. 
+0. You will need a working python3 development environment, including virtualenv, virtualenvwrapper, setuptools and pip. You will need sphinx to build the documantation.
 1. Fork the `marketeer` repo on GitHub.
 2. Clone your fork locally::
 
